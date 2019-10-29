@@ -118,7 +118,7 @@ void handle(socket_t *sock) {
   }
 
 
-
+  /* Parse the method */
   /* Pointer to the first space in buffer */
 
   char *space = strchr(buf, ' ');
@@ -131,13 +131,19 @@ void handle(socket_t *sock) {
   space = strchr(request_uri, ' ');
   char *uri = substring(request_uri, 0, space - request_uri);
 
+  /* Parse the http version */
+  /* Pointer to the first character of the version */
 
-  printf("haha wut: {%s}\n", uri);
+  char *version = space + 1;
+  space = strchr(version, ' ');
+  char *http_version = substring(version, 0, space - request_uri);
+
+  printf("haha wut: {%s}\n", http_version);
 
   request.method = method;
-  request.request_uri = "/";
+  request.request_uri = uri;
   request.query = "";
-  request.http_version = "HTTP/1.1";
+  request.http_version = http_version;
   request.num_headers = 0;
   request.message_body = "";
 
@@ -145,6 +151,8 @@ void handle(socket_t *sock) {
 
   free(method);
   method = NULL;
+  free(uri);
+  uri = NULL;
 
 
   http_response response = {0};
