@@ -132,7 +132,7 @@ void handle(socket_t *sock) {
   char *uri = substring(request_uri, 0, space - request_uri);
 
 
-  printf("haha wut: {%s}\n", request_uri);
+  printf("haha wut: {%s}\n", uri);
 
   request.method = method;
   request.request_uri = "/";
