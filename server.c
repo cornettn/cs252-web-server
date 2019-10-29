@@ -10,6 +10,9 @@
 #define SUCCESS (1)
 #define PARSE_ERROR (-1)
 
+parse_request(http_request, socket *);
+substring(char *, int, int);
+
 char g_user_pass[MAX_USR_PWD_LEN];
 
 /*
