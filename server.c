@@ -123,23 +123,30 @@ void handle(socket_t *sock) {
   /* Pointer to the first space in buffer */
 
   char *space = strchr(buf, ' ');
-  char *method = substring(buf, 0, space - buf);
+  char *method = NULL;
+  if (space != NULL) {
+    char *method = substring(buf, 0, space - buf);
+  }
 
   /* Parse the request uri */
   /* Pointer to the first character of the request uri */
 
   char *request_uri = space + 1;
   space = strchr(request_uri, ' ');
-  char *uri = substring(request_uri, 0, space - request_uri);
+  char *uri = NULL;
+  if (space != NULL) {
+    uri = substring(request_uri, 0, space - request_uri);
+  }
 
   /* Parse the http version */
   /* Pointer to the first character of the version */
 
   char *version = space + 1;
   space = strstr(version, "\r\n");
-  char *http_version = substring(version, 0, space - version);
-
-  printf("haha wut: {%s}\n", http_version);
+  char *html_version = NULL;
+  if (space != NULL) {
+    html_version = substring(version, 0, space - version);
+  }
 
   request.method = method;
   request.request_uri = uri;
