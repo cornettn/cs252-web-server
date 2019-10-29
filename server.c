@@ -5,10 +5,12 @@
 
 #include "http_messages.h"
 
+#define BUF_SIZE (1024)
+
 char g_user_pass[MAX_USR_PWD_LEN];
 
 /*
- * Return a string in a format <user>:<password> 
+ * Return a string in a format <user>:<password>
  * either from auth.txt or from your implememtation.
  */
 
@@ -78,9 +80,28 @@ void run_thread_pool_server(acceptor *acceptor, int num_threads) {
  */
 
 void handle(socket_t *sock) {
-  http_request request;
+  http_request request = {0};
 
+  // PRIORITY 1
   // TODO: Replace this code and actually parse the HTTP request
+
+  /* Buffer to hold the contents of the socket */
+
+  char *buf = (char *) malloc(BUF_SIZE);
+
+  /* Read the contents of sock into BUF.
+   * Try reading BUF_SIZE characters */
+
+  int check = socket_read(sock, buf, BUF_SIZE);
+  if (check == -1) {
+
+    /* Error */
+
+    fprintf(stderr, "error\n");
+  }
+  else {
+    printf("Read socket: ----------------\n%s\n--------------\n", buf);
+  }
 
   request.method = "GET";
   request.request_uri = "/";
@@ -92,8 +113,9 @@ void handle(socket_t *sock) {
   print_request(&request);
 
 
-  http_response response = { 0 };
+  http_response response = {0};
 
+  // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
 
   response.http_version = "HTTP/1.1";

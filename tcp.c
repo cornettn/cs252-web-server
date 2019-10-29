@@ -31,8 +31,8 @@ int close_tcp_socket(tcp_socket *socket) {
 } /* close_tcp_socket() */
 
 /*
- * Read a buffer of length buf_len from the TCP socket. Return the length of the 
- * message on successful completion. 
+ * Read a buffer of length buf_len from the TCP socket. Return the length of the
+ * message on successful completion.
  * You should use the polymorphic version of this function, which is socket_read()
  * in socket.c
  */
@@ -97,7 +97,11 @@ tcp_acceptor *create_tcp_acceptor(int port) {
 
   acceptor->addr.sin_family = AF_INET;
   acceptor->addr.sin_port = htons(port);
-  acceptor->addr.sin_addr.s_addr = htonl(INADDR_ANY);
+
+  /* TODO: Change INADDR_LOOPBACK back to INADDR_ANY to accept
+   * any connection once there are no security issues */
+
+  acceptor->addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
 
   acceptor->master_socket = socket(AF_INET, SOCK_STREAM, 0);
   if (acceptor->master_socket < 0) {
