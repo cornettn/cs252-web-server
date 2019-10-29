@@ -175,6 +175,7 @@ int parse_request(http_request *request, socket_t *sock) {
   free(http_version);
   http_version = NULL;
 
+  return SUCCESS;
 } /* parse_request() */
 
 /*
