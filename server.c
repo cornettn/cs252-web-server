@@ -1,6 +1,7 @@
 #include "server.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
 #include "http_messages.h"
@@ -102,6 +103,12 @@ void handle(socket_t *sock) {
   else {
     printf("Read socket:\n----------------\n%s\n--------------\n", buf);
   }
+
+  char *space = strchr(buf, ' ');
+  char *reqest_uri = space + 1;
+  space = strchr(space, ' ');
+
+  printf("haha wut: {%s}\n", space - request_uri);
 
   request.method = "GET";
   request.request_uri = "/";
