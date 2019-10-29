@@ -100,6 +100,14 @@ char *substring(char *buf, int start, int end) {
  */
 
 int parse_request(http_request *request, socket_t *sock) {
+  /* Ensure that the request is filled with default values */
+  request->method = "default";
+  request->request_uri = "default";
+  request->http_version = "default";
+  request->num_headers = -1;
+  request->query = "default";
+  request->message_body = "default";
+
   /* Buffer to hold the contents of the socket */
 
   char *buf = (char *) malloc(BUF_SIZE);
@@ -126,6 +134,9 @@ int parse_request(http_request *request, socket_t *sock) {
   char *method = NULL;
   if (space != NULL) {
     method = substring(buf, 0, space - buf);
+    request->method = strdup(method);
+    free(method);
+    method = NULL;
   }
   else {
     return PARSE_ERROR;
@@ -139,6 +150,9 @@ int parse_request(http_request *request, socket_t *sock) {
   char *uri = NULL;
   if (space != NULL) {
     uri = substring(request_uri, 0, space - request_uri);
+    request->request_uri = strdup(uri);
+    free(uri);
+    uri = NULL;
   }
   else {
     return PARSE_ERROR;
@@ -152,28 +166,13 @@ int parse_request(http_request *request, socket_t *sock) {
   char *http_version = NULL;
   if (space != NULL) {
     http_version = substring(version, 0, space - version);
+    request->http_version = strdup(http_version);
+    free(http_version);
+    http_version = NULL;
   }
   else {
     return PARSE_ERROR;
   }
-
-  request->method = strdup(method);
-  request->request_uri = strdup(uri);
-  request->query = "";
-  request->http_version = strdup(http_version);
-  request->num_headers = 0;
-  request->message_body = "";
-
-//  print_request(&request);
-
-  /* Free all of the substrings generated */
-
-  free(method);
-  method = NULL;
-  free(uri);
-  uri = NULL;
-  free(http_version);
-  http_version = NULL;
 
   return SUCCESS;
 } /* parse_request() */
