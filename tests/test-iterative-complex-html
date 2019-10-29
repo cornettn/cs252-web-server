@@ -1,0 +1,22 @@
+#! /bin/bash
+
+../myhttpd 0 > /dev/null 2>&1 &
+PID=$!
+
+prlimit --nproc=50 --cpu=600 --rss=4000000 -p $PID
+
+sleep 1
+PORT=$(ss -l -p -n | grep $PID | awk '{print $5}' | cut -d ":" -f2)
+USERSTRING=$(cat ../auth.txt)
+curl -s -u $USERSTRING "127.0.0.1:$PORT/complex.html" > ./tmp/$(basename "$0")
+diff -qw ./tmp/$(basename "$0") ../http-root-dir/htdocs/complex.html
+CODE=$?
+rm -f ./tmp/*
+kill -15 $PID
+if [[ $CODE != 0 ]]; then
+  printf "\033[0;31m$(basename "$0") Failed.\033[0m\n"
+  exit 1
+else
+  printf "\033[0;32m$(basename "$0") Passed.\033[0m\n"
+  exit 0
+fi
