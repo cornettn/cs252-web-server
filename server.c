@@ -7,6 +7,8 @@
 #include "http_messages.h"
 
 #define BUF_SIZE (1024)
+#define SUCCESS (1)
+#define PARSE_ERROR (-1)
 
 char g_user_pass[MAX_USR_PWD_LEN];
 
@@ -91,15 +93,10 @@ char *substring(char *buf, int start, int end) {
 } /* substring */
 
 /*
- * Handle an incoming connection on the passed socket.
+ * This function is used to parse an incoming http request.
  */
 
-void handle(socket_t *sock) {
-  http_request request = {0};
-
-  // PRIORITY 1
-  // TODO: Replace this code and actually parse the HTTP request
-
+int parse_request(http_request *request, socket *sock) {
   /* Buffer to hold the contents of the socket */
 
   char *buf = (char *) malloc(BUF_SIZE);
@@ -127,6 +124,9 @@ void handle(socket_t *sock) {
   if (space != NULL) {
     method = substring(buf, 0, space - buf);
   }
+  else {
+    return PARSE_ERROR;
+  }
 
   /* Parse the request uri */
   /* Pointer to the first character of the request uri */
@@ -136,6 +136,9 @@ void handle(socket_t *sock) {
   char *uri = NULL;
   if (space != NULL) {
     uri = substring(request_uri, 0, space - request_uri);
+  }
+  else {
+    return PARSE_ERROR;
   }
 
   /* Parse the http version */
@@ -147,20 +150,45 @@ void handle(socket_t *sock) {
   if (space != NULL) {
     http_version = substring(version, 0, space - version);
   }
+  else {
+    return PARSE_ERROR;
+  }
 
-  request.method = method;
-  request.request_uri = uri;
+  request.method = strdup(method);
+  request.request_uri = strdup(uri);
   request.query = "";
-  request.http_version = http_version;
+  request.http_version = strdup(http_version);
   request.num_headers = 0;
   request.message_body = "";
 
-  print_request(&request);
+//  print_request(&request);
+
+  /* Free all of the substrings generated */
 
   free(method);
   method = NULL;
   free(uri);
   uri = NULL;
+  free(http_version);
+  http_version = NULL;
+
+} /* parse_request() */
+
+/*
+ * Handle an incoming connection on the passed socket.
+ */
+
+void handle(socket_t *sock) {
+  http_request request = {0};
+
+  // PRIORITY 1
+  // TODO: Replace this code and actually parse the HTTP request
+
+  int value = parse_request(&request);
+  if (value == PARSE_ERROR) {
+    fprintf(stderr, "Error parsing the request\n");
+  }
+  print_request(&request);
 
 
   http_response response = {0};
