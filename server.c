@@ -157,12 +157,12 @@ int parse_request(http_request *request, socket_t *sock) {
     return PARSE_ERROR;
   }
 
-  request.method = strdup(method);
-  request.request_uri = strdup(uri);
-  request.query = "";
-  request.http_version = strdup(http_version);
-  request.num_headers = 0;
-  request.message_body = "";
+  request->method = strdup(method);
+  request->request_uri = strdup(uri);
+  request->query = "";
+  request->http_version = strdup(http_version);
+  request->num_headers = 0;
+  request->message_body = "";
 
 //  print_request(&request);
 
