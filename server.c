@@ -115,7 +115,7 @@ int parse_request(http_request *request, socket_t *sock) {
     fprintf(stderr, "error\n");
   }
   else {
-    printf("Read socket:\n----------------\n%s\n--------------\n", buf);
+    printf("Contents of Socket:\n----------------\n%s\n----------------\n", buf);
   }
 
 
