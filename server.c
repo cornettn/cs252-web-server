@@ -124,8 +124,8 @@ void handle(socket_t *sock) {
   char *space = strchr(buf, ' ');
   char *method = substring(buf, 0, space - buf);
 
-  char *request_uri = space + 1;
-  space = strchr(space, ' ');
+//  char *request_uri = space + 1;
+//  space = strchr(space, ' ');
 
 
   printf("haha wut: {%s}\n", method);
