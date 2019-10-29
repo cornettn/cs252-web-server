@@ -128,7 +128,7 @@ void handle(socket_t *sock) {
   /* Pointer to the first character of the request uri */
 
   char *request_uri = space + 1;
-  space = strchr(space, ' ');
+  space = strchr(request_uri, ' ');
   char *uri = substring(request_uri, 0, space - request_uri);
 
 
