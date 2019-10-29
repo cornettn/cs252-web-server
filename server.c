@@ -82,7 +82,7 @@ void run_thread_pool_server(acceptor *acceptor, int num_threads) {
  */
 
 char *substring(char *buf, int start, int end) {
-  char new_str = (char *) malloc(end - start);
+  char *new_str = (char *) malloc(end - start);
   for (int i = 0; i < end - start; i++) {
     new_str[i] = buf[start + i];
   }
