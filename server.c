@@ -108,7 +108,7 @@ void handle(socket_t *sock) {
   char *request_uri = space + 1;
   space = strchr(space, ' ');
 
-  printf("haha wut: {%s}\n", space - reqeust_uri);
+  printf("haha wut: {%s}\n", space - request_uri);
 
   request.method = "GET";
   request.request_uri = "/";
