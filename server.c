@@ -76,6 +76,19 @@ void run_thread_pool_server(acceptor *acceptor, int num_threads) {
   // thread pool
 } /* run_thread_pool_server() */
 
+
+/*
+ * This function is used to find a substring of a buf.
+ */
+
+char *substring(char *buf, int start, int end) {
+  char new_str = (char *) malloc(end - start);
+  for (int i = 0; i < end - start; i++) {
+    new_str[i] = buf[start + i];
+  }
+  return new_str;
+} /* substring */
+
 /*
  * Handle an incoming connection on the passed socket.
  */
@@ -108,7 +121,8 @@ void handle(socket_t *sock) {
   char *request_uri = space + 1;
   space = strchr(space, ' ');
 
-  printf("haha wut: {%s}\n", space - request_uri);
+
+  printf("haha wut: {%s}\n", substring(buf, request_uri, space);
 
   request.method = "GET";
   request.request_uri = "/";
