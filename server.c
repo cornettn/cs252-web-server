@@ -136,7 +136,7 @@ void handle(socket_t *sock) {
 
   char *version = space + 1;
   space = strstr(version, "\r\n");
-  char *http_version = substring(version, 0, space - request_uri);
+  char *http_version = substring(version, 0, space - version);
 
   printf("haha wut: {%s}\n", http_version);
 
