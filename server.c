@@ -99,7 +99,7 @@ char *substring(char *buf, int start, int end) {
  * This function is used to parse an incoming http request.
  */
 
-int parse_request(http_request *request, socket *sock) {
+int parse_request(http_request *request, socket_t *sock) {
   /* Buffer to hold the contents of the socket */
 
   char *buf = (char *) malloc(BUF_SIZE);
