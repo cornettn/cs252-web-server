@@ -124,11 +124,15 @@ void handle(socket_t *sock) {
   char *space = strchr(buf, ' ');
   char *method = substring(buf, 0, space - buf);
 
-//  char *request_uri = space + 1;
-//  space = strchr(space, ' ');
+  /* Parse the request uri */
+  /* Pointer to the first character of the request uri */
+
+  char *request_uri = space + 1;
+  space = strchr(space, ' ');
+  char *uri = substring(request_uri, 0, space - request_uri);
 
 
-  printf("haha wut: {%s}\n", method);
+  printf("haha wut: {%s}\n", request_uri);
 
   request.method = method;
   request.request_uri = "/";
