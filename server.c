@@ -125,7 +125,7 @@ void handle(socket_t *sock) {
   char *space = strchr(buf, ' ');
   char *method = NULL;
   if (space != NULL) {
-    char *method = substring(buf, 0, space - buf);
+    method = substring(buf, 0, space - buf);
   }
 
   /* Parse the request uri */
@@ -143,9 +143,9 @@ void handle(socket_t *sock) {
 
   char *version = space + 1;
   space = strstr(version, "\r\n");
-  char *html_version = NULL;
+  char *http_version = NULL;
   if (space != NULL) {
-    html_version = substring(version, 0, space - version);
+    http_version = substring(version, 0, space - version);
   }
 
   request.method = method;
