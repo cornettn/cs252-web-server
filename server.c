@@ -117,14 +117,20 @@ void handle(socket_t *sock) {
     printf("Read socket:\n----------------\n%s\n--------------\n", buf);
   }
 
+
+
+  /* Pointer to the first space in buffer */
+
   char *space = strchr(buf, ' ');
+  char *method = substring(buf, 0, space - buf);
+
   char *request_uri = space + 1;
   space = strchr(space, ' ');
 
 
-  printf("haha wut: {%s}\n", substring(buf, request_uri, space);
+  printf("haha wut: {%s}\n", method);
 
-  request.method = "GET";
+  request.method = method;
   request.request_uri = "/";
   request.query = "";
   request.http_version = "HTTP/1.1";
@@ -132,6 +138,9 @@ void handle(socket_t *sock) {
   request.message_body = "";
 
   print_request(&request);
+
+  free(method);
+  method = NULL;
 
 
   http_response response = {0};
