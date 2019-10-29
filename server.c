@@ -184,7 +184,7 @@ void handle(socket_t *sock) {
   // PRIORITY 1
   // TODO: Replace this code and actually parse the HTTP request
 
-  int value = parse_request(&request);
+  int value = parse_request(&request, sock);
   if (value == PARSE_ERROR) {
     fprintf(stderr, "Error parsing the request\n");
   }
