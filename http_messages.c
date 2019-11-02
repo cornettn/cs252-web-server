@@ -129,12 +129,12 @@ char *response_string(http_response *resp) {
   sprintf(str, "%d", resp->status_code);
   printf("{%s}\n", str);
 
-  char *incorrect = resp->status_code SPACE resp->reason_phrase CRLF
+/*  char *incorrect = resp->status_code SPACE resp->reason_phrase CRLF
     "Connection: close\r\n"
     "Content-Length: 12\r\n"
     "\r\n"
     "Hello CS252!\r\n";
-
+*/
   char *to_string = malloc(sizeof(char) * (strlen(incorrect) +
                                            strlen(resp->http_version) +
                                            1));
