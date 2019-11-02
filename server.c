@@ -282,8 +282,8 @@ void add_header_to_response(http_response *response, header *head) {
  * This function is used to check if a request is authorized.
  */
 
-int is_authorized(http_response resp, http_request req) {
-  char *auth = get_header_value(&req, AUTH_HEADER);
+int is_authorized(http_response *resp, http_request *req) {
+  char *auth = get_header_value(req, AUTH_HEADER);
 
   /* Ensure that there is a Authorization header */
 
@@ -305,9 +305,9 @@ int is_authorized(http_response resp, http_request req) {
   header *head = (header *) malloc(sizeof(header));
   head->key = strdup("WWW-Authenticate");
   head->value = strdup("Basic realm=\"hardcode\"");
-  add_header_to_response(&resp, head);
-  resp.status_code = 401;
-  resp.reason_phrase = strdup(status_reason(resp.status_code));
+  add_header_to_response(resp, head);
+  resp->status_code = 401;
+  resp->reason_phrase = strdup(status_reason(resp.status_code));
   return FALSE;
 } /* is_authorized() */
 
@@ -329,9 +329,9 @@ void handle(socket_t *sock) {
   }
   print_request(&request);
 
-  http_response response = (http_response) malloc(sizeof(http_response));
+  http_response *response = (http_response *) malloc(sizeof(http_response));
 
-  if(is_authorized(response, request)) {
+  if(is_authorized(response, &request)) {
     // TODO Handle a request that is authorized
   }
 
