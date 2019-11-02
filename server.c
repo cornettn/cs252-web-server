@@ -298,12 +298,12 @@ void handle(socket_t *sock) {
 
 //  response.http_version = "HTTP/1.1";
 
-  char *to_string = response_string(&response);
-  printf("%s\n", to_string);
-  socket_write_string(sock, to_string);
+//  char *to_string = response_string(&response);
+//  printf("%s\n", to_string);
+//  socket_write_string(sock, to_string);
 
-  free(to_string);
-  to_string = NULL;
+//  free(to_string);
+//  to_string = NULL;
 
   close_socket(sock);
 } /* handle() */
