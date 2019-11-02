@@ -5,10 +5,12 @@
 #include <stdlib.h>
 
 #include "http_messages.h"
+#include "routes.h"
 
 #define BUF_SIZE (1024)
 #define SUCCESS (1)
 #define PARSE_ERROR (-1)
+#define CRLF ("\r\n")
 
 int parse_request(http_request *, socket_t *);
 char *substring(char *, int, int);
@@ -95,6 +97,81 @@ char *substring(char *buf, int start, int end) {
   return new_str;
 } /* substring */
 
+
+/*
+ * This fuction is used to parse an individual header.
+ */
+
+header *parse_header(char *head) {
+
+  char *space = strchr(head, ' ');
+  if (space == NULL) {
+    //printf("Invalid Header\n");
+    return NULL;
+  }
+
+  header *headr = (header *) malloc(sizeof(header));
+
+  headr->key = substring(head, 0, space - head - 1);
+  space++;
+  headr->value = substring(space, 0, strlen(space));
+
+  //printf("Key: {%s}\n", headr->key);
+  //printf("Val: {%s}\n", headr->value);
+
+  return headr;
+
+} /* parse_header() */
+
+
+int parse_all_headers(http_request *request, socket_t *sock, char *buf) {
+
+  /* This is the location of the next CRLF in the headers */
+
+  char *crlf = strstr(buf, CRLF);
+
+  /* This is the string containing all the un-parsed headers */
+
+  char *rest_headers = crlf + strlen(CRLF);
+
+  /* Find the location of the next CRLF */
+
+  crlf = strstr(rest_headers, CRLF);
+
+  while (crlf != NULL) {
+    /* Extract the header */
+
+    char *headr = substring(rest_headers, 0, crlf - rest_headers);
+
+    header *head = parse_header(headr);
+    free(headr);
+    headr = NULL;
+    if (head == NULL) {
+      return PARSE_ERROR;
+    }
+
+    /* Update the request */
+
+    request->num_headers++;
+    request->headers = realloc(request->headers,
+      request->num_headers * sizeof(header));
+    request->headers[request->num_headers - 1] = *head;
+
+    /* Update rest_headers and crlf */
+
+    rest_headers = crlf + strlen(CRLF);
+    crlf = strstr(rest_headers, CRLF);
+
+    /* Break the loop if the last crlf and next crlf are next to each other */
+
+    if (rest_headers ==  crlf) {
+      break;
+    }
+  }
+
+  return SUCCESS;
+}
+
 /*
  * This function is used to parse an incoming http request.
  */
@@ -104,7 +181,7 @@ int parse_request(http_request *request, socket_t *sock) {
   request->method = "method";
   request->request_uri = "uri";
   request->http_version = "http_version";
-  request->num_headers = -1;
+  request->num_headers = 0;;
   request->query = "query";
   request->message_body = "message body";
 
@@ -174,7 +251,7 @@ int parse_request(http_request *request, socket_t *sock) {
     return PARSE_ERROR;
   }
 
-  return SUCCESS;
+  return parse_all_headers(request, sock, buf);
 } /* parse_request() */
 
 /*
@@ -193,11 +270,12 @@ void handle(socket_t *sock) {
   }
   print_request(&request);
 
-
   http_response response = {0};
 
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
+
+  handle_htdocs(&request);
 
   response.http_version = "HTTP/1.1";
 
