@@ -127,19 +127,26 @@ char *response_string(http_response *resp) {
 
   char *str = malloc(100);
   sprintf(str, "%d", resp->status_code);
-  printf("{%s}\n", str);
+  str = append(str, SPACE);
+  str = append(str, resp->reason_phrase);
+  str = append(str, CRLF);
 
-/*  char *incorrect = resp->status_code SPACE resp->reason_phrase CRLF
-    "Connection: close\r\n"
+
+  char *incorrect = "Connection: close\r\n"
     "Content-Length: 12\r\n"
     "\r\n"
     "Hello CS252!\r\n";
-*/
+
+  str = append(str, incorrect);
+
   char *to_string = malloc(sizeof(char) * (strlen(str) +
                                            strlen(resp->http_version) +
                                            1));
   strcpy(to_string, resp->http_version);
   strcat(to_string, str);
+
+  printf("{%s}\n", to_string);
+
   return to_string;
 } /* response_string() */
 
