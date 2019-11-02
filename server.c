@@ -302,9 +302,9 @@ int is_authorized(http_response resp, http_request req) {
 
   /* Not Authorized */
 
-  header *head = {0};
-  head->key = "WWW-Authenticate";
-  head->value = "Basic realm=\"hardcode\"";
+  header *head = (header *) malloc(sizeof(header));
+  head->key = strdup("WWW-Authenticate");
+  head->value = strdup("Basic realm=\"hardcode\"");
   add_header_to_response(&resp, head);
   resp.status_code = 401;
   resp.reason_phrase = strdup(status_reason(resp.status_code));
