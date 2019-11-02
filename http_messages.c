@@ -115,12 +115,12 @@ char *get_header_value(const http_request *request, char *key) {
  * on the parameter.
  */
 
-char *response_string(http_response *response) {
+char *response_string(http_response *resp) {
   // TODO: Replace this code and correctly create the HTTP response from the
   // argument
 
-  char *incorrect = "" response->http_version SPACE
-    response->status_code SPACE response->reason_phrase CRLF
+  char *incorrect = "" resp->http_version SPACE
+    resp->status_code SPACE resp->reason_phrase CRLF
     "Connection: close\r\n"
     "Content-Length: 12\r\n"
     "\r\n"
