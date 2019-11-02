@@ -96,7 +96,7 @@ const char *status_reason(int status) {
   }
 } /* status_reason() */
 
-
+/*
 char *get_header_value(const http_request *request, char *key) {
   for (int i = 0; i < request->num_headers; i++) {
     if (!strcmp(request->headers[i].key, key)) {
@@ -105,6 +105,7 @@ char *get_header_value(const http_request *request, char *key) {
   }
   return NULL;
 }
+*/
 
 /*
  * Create the actual response string to be sent over the socket, based
