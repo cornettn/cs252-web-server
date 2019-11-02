@@ -9,7 +9,7 @@
  * helpful when implementing response_string().
  */
 
-char *status_reason(int status) {
+const char *status_reason(int status) {
   switch (status) {
   case 100:
     return "Continue";
