@@ -101,7 +101,7 @@ tcp_acceptor *create_tcp_acceptor(int port) {
   /* TODO: Change INADDR_LOOPBACK back to INADDR_ANY to accept
    * any connection once there are no security issues */
 
-  acceptor->addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+  acceptor->addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
   acceptor->master_socket = socket(AF_INET, SOCK_STREAM, 0);
   if (acceptor->master_socket < 0) {
