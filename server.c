@@ -336,6 +336,7 @@ void handle(socket_t *sock) {
   http_response *response = (http_response *) malloc(sizeof(http_response));
   response->http_version = request.http_version;
   response->num_headers = 0;
+  response->headers = NULL;
 
   if(is_authorized(response, &request)) {
     // TODO Handle a request that is authorized
