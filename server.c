@@ -289,7 +289,10 @@ void handle(socket_t *sock) {
     printf("No Auth\n");
   }
   else {
-    printf("Auth: {%s}\n", auth);
+    char *space = strchr(auth, ' ');
+    space++;
+    char *base64 = substring(space, 0, strlen(space));
+    printf("Auth: {%s}\n", base64);
     printf("Real: {%s}\n", g_user_pass);
   }
 
