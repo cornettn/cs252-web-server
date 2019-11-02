@@ -8,7 +8,7 @@ prlimit --nproc=50 --cpu=600 --rss=4000000 -p $PID
 sleep 1
 PORT=$(ss -l -p -n | grep $PID | awk '{print $5}' | cut -d ":" -f2)
 USERSTRING=$(cat ../auth.txt)
-diff -wq <(curl -s -u $USERSTRING "127.0.0.1:$PORT") ../http-root-dir/htdocs/index.html
+diff -wq <(curl -s -u $USERSTRING "127.0.0.1:$PORT") ./http-root-dir/htdocs/index.html
 CODE=$?
 kill -15 $PID
 if [[ $CODE != 0 ]]; then

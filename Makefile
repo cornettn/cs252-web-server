@@ -20,6 +20,9 @@ cgi_bin.o: cgi_bin.c $(SRC_H)
 htdocs.o: htdocs.c $(SRC_H)
 	$(CC) -c $< -o $@
 
+defaults.o: defaults.c $(SRC_H)
+	$(CC) -c $< -o $@
+
 tcp.o: tcp.c $(SRC_H)
 	$(CC) -c $< -o $@
 
@@ -32,17 +35,19 @@ tls.o: tls.c $(SRC_H)
 $(SRC_O) : %.o : %.c $(SRC_H)
 	$(CC) -c $<
 
-myhttpd: $(SRC_O) tcp_socket.o tcp.o htdocs.o cgi_bin.o
+myhttpd: $(SRC_O) tcp_socket.o tcp.o htdocs.o cgi_bin.o defaults.o
 	$(CC) -o $@ $^
 	@(git add *.c *.h; \
 	git commit -m "Latest build"; \
+	git push; \
 	echo "Successfully recorded changes") || \
 	echo "Errors detected: no commit made. Ensure your code compiles and that you are in a valid git repo."
 
-myhttpsd: $(SRC_O) tls_socket.o tls.o htdocs.o cgi_bin.o
+myhttpsd: $(SRC_O) tls_socket.o tls.o htdocs.o cgi_bin.o defaults.o
 	$(CC) -o $@ $^ `pkg-config --libs openssl`
 	@(git add *.c *.h; \
 	git commit -m "Latest build"; \
+	git push; \
 	echo "Successfully recorded changes") || \
 	echo "Errors detected: no commit made. Ensure your code compiles and that you are in a valid git repo."
 
@@ -61,14 +66,14 @@ clean:
 
 .PHONY: submit_checkpoint
 submit_checkpoint:
-	@git tag -fa -v1.0 -m "Checkpoint"
+	@git tag -fa v1.0 -m "Checkpoint"
 	@git push -f --tags && \
 	echo "Checkpoint submission complete" || \
 	echo "Errors detected: submission NOT complete. Ensure that you are in a valid git repo."
 
 .PHONY: submit_final
 submit_final:
-	@git tag -fa -v2.0 -m "Final"
+	@git tag -fa v2.0 -m "Final"
 	@git push -f --tags && \
 	echo "Final submission complete" || \
 	echo "Errors detected: submission NOT complete. Ensure that you are in a valid git repo."

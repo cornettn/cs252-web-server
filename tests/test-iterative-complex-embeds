@@ -12,7 +12,7 @@ USERSTRING=$(cat ../auth.txt)
 wget -q -nH -r -np 127.0.0.1:$PORT/complex.html --http-user=$(echo $USERSTRING | cut -d":" -f1) --http-password=$(echo $USERSTRING | cut -d":" -f2) --directory-prefix=./tmp
 diff -qrNw ./tmp/ ./test-files/test-iterative-complex-embeds/
 CODE=$?
-rm -rf ./tmp/* > /dev/null 2>&1 
+#rm -rf ./tmp/* > /dev/null 2>&1 
 kill -15 $PID
 if [[ $CODE != 0 ]]; then
   printf "\033[0;31m$(basename "$0") Failed.\033[0m\n"

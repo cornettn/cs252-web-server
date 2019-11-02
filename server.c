@@ -101,12 +101,12 @@ char *substring(char *buf, int start, int end) {
 
 int parse_request(http_request *request, socket_t *sock) {
   /* Ensure that the request is filled with default values */
-  request->method = "default";
-  request->request_uri = "default";
-  request->http_version = "default";
+  request->method = "method";
+  request->request_uri = "uri";
+  request->http_version = "http_version";
   request->num_headers = -1;
-  request->query = "default";
-  request->message_body = "default";
+  request->query = "query";
+  request->message_body = "message body";
 
   /* Buffer to hold the contents of the socket */
 

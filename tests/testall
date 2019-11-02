@@ -5,7 +5,5 @@ ITERATIVE_TESTS=( test-iterative-cgi-bin test-iterative-cgi-bin-args test-iterat
 echo "--------PART 1  TESTS--------"
 ./test-part1
 echo "--------PART 2  TESTS--------"
-for TEST in ${ITERATIVE_TESTS[@]}; do
-  ./$TEST
-done
+./test-part2
 pkill -f myhttpd

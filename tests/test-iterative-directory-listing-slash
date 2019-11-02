@@ -16,5 +16,5 @@ for FILE in $RFILES; do
   fi
 done
 printf "\033[0;32m$(basename "$0")  Passed.\033[0m\n"
-rm -f ./tmp/*
+rm -rf ./tmp/*
 kill -15 $PID

@@ -6,7 +6,6 @@ chmod +x ./http-root-dir/cgi-bin/*
 sleep 1
 PORT=$(ss -l -p -n | grep $PID | awk '{print $5}' | cut -d ":" -f2)
 USERSTRING=$(cat ../auth.txt)
- > ./tmp/$(basename "$0")
 SERVER_SOFTWARE="myhttpd"
 SERVER_NAME="cs252-server"
 GATEWAY_INTERFACE="cs252-gateway"

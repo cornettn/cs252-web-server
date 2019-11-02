@@ -57,10 +57,6 @@ void init_openssl() {
  * Handle SSL cleanup (for termination)
  */
 
-void cleanup_openssl() {
-  EVP_cleanup();
-}
-
 /*
  * Create an SSL context
  */
@@ -70,8 +66,8 @@ SSL_CTX *create_context() {
   const SSL_METHOD *method;
   SSL_CTX *ctx;
 
-  // Get SSLv23 method, this support SSLv2 and SSLv3 protocols on the server's side
-  method = SSLv23_server_method();
+  // Get SSL method, this is a version-flexible method and supports mutiple protocols on the server's side
+  method = TLS_server_method();
 
   // New a context with method created above
   ctx = SSL_CTX_new(method);
@@ -132,7 +128,7 @@ int main(int argc, char **argv) {
     struct sockaddr_in addr = { 0 };
     uint len = sizeof(addr);
     SSL *ssl = NULL;
-    const char reply[] = "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Type: text/text\r\nContent-Length: 11\r\n\r\nHello World";
+    const char reply[] = "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Type: text/html\r\nContent-Length: 11\r\n\r\nHello World";
     char request[4096] = { 0 };
 
     // Accept incoming connections
@@ -167,9 +163,6 @@ int main(int argc, char **argv) {
 
   // Free the ssl context
   SSL_CTX_free(ctx);
-
-  // Free resources occupied by ssl
-  cleanup_openssl();
 }
 
 

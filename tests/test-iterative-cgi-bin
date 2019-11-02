@@ -6,7 +6,6 @@ chmod +x ./http-root-dir/cgi-bin/*
 sleep 1
 PORT=$(ss -l -p -n | grep $PID | awk '{print $5}' | cut -d ":" -f2)
 USERSTRING=$(cat ../auth.txt)
- > ./tmp/$(basename "$0")
 diff -wq <(curl -s -u $USERSTRING "127.0.0.1:$PORT/cgi-bin/date" | head -n +2) <(date)
 CODE=$?
 kill -15 $PID
