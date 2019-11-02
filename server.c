@@ -289,7 +289,7 @@ void handle(socket_t *sock) {
   }
 
 
-  http_response response = {0};
+//  http_response response = {0};
 
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
