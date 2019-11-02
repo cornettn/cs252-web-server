@@ -345,7 +345,7 @@ void handle(socket_t *sock) {
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
 
-  response = handle_htdocs(&request);
+  //response = handle_htdocs(&request);
 
 
   char *to_string = response_string(response);
