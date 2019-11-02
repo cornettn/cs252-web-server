@@ -275,7 +275,7 @@ char *get_header_value(const http_request *request, char *key) {
  */
 
 void add_header_to_response(http_response *response, header *head) {
-  response->headers[reponse->num_headers++] = *head;
+  response->headers[response->num_headers++] = *head;
 } /* add_header_to_response() */
 
 /*
