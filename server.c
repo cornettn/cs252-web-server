@@ -294,7 +294,7 @@ void handle(socket_t *sock) {
     space++;
     char *base64 = substring(space, 0, strlen(space));
 
-    printf("Auth: {%s}\n", auth);
+    printf("Auth: {%s}\n", base64;
     printf("Real: {%s}\n", g_user_pass);
 
     if (strcmp(base64, g_user_pass)) {
