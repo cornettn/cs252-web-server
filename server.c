@@ -307,7 +307,7 @@ int is_authorized(http_response resp, http_request req) {
   head->value = "Basic realm=\"hardcode\"";
   add_header_to_response(&resp, head);
   resp.status_code = 401;
-  resp.reason_phrase = status_reason(resp.status_code);
+  resp.reason_phrase = strdup(status_reason(resp.status_code));
   return FALSE;
 } /* is_authorized() */
 
