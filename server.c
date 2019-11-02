@@ -294,9 +294,9 @@ void handle(socket_t *sock) {
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
 
-  response = handle_htdocs(&request);
+//  response = handle_htdocs(&request);
 
-  response.http_version = "HTTP/1.1";
+//  response.http_version = "HTTP/1.1";
 
   char *to_string = response_string(&response);
   printf("%s\n", to_string);
