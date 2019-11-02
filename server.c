@@ -276,7 +276,10 @@ char *get_header_value(http_request *request, char *key) {
 
 void add_header_to_response(http_response *response, header *head) {
   printf("aaaa\n");
-  response->headers[response->num_headers++] = *head;
+  response->num_headers++;
+  response->headers = realloc(response->headers,
+      response->num_headers * sizeof(header));
+  response->headers[response->num_headers - 1] = *head;
 } /* add_header_to_response() */
 
 /*
@@ -331,6 +334,8 @@ void handle(socket_t *sock) {
   print_request(&request);
 
   http_response *response = (http_response *) malloc(sizeof(http_response));
+  response->http_version = request.http_version;
+  response->num_headers = 0;
 
   if(is_authorized(response, &request)) {
     // TODO Handle a request that is authorized
@@ -342,7 +347,6 @@ void handle(socket_t *sock) {
 
 //  response = handle_htdocs(&request);
 
-  response->http_version = request.http_version;
 
   char *to_string = response_string(response);
   printf("%s\n", to_string);
