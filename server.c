@@ -6,6 +6,7 @@
 
 #include "http_messages.h"
 
+
 #define BUF_SIZE (1024)
 #define SUCCESS (1)
 #define PARSE_ERROR (-1)
@@ -274,7 +275,7 @@ void handle(socket_t *sock) {
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
 
-  handle_htdocs(&request);
+  response = handle_htdocs(&request);
 
   response.http_version = "HTTP/1.1";
 
