@@ -285,7 +285,11 @@ void handle(socket_t *sock) {
 
   char *auth = get_header_value(&request, AUTH_HEADER);
   if (auth == NULL) {
+    // TODO: Send a unatuthorized response
     printf("No Auth\n");
+  }
+  else {
+    printf("Auth: {%s}\n", auth);
   }
 
 
