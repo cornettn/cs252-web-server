@@ -275,7 +275,6 @@ char *get_header_value(http_request *request, char *key) {
  */
 
 void add_header_to_response(http_response *response, header *head) {
-  printf("aaaa\n");
   response->num_headers++;
   response->headers = realloc(response->headers,
       response->num_headers * sizeof(header));
