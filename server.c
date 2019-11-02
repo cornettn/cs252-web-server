@@ -8,6 +8,8 @@
 //#include "routes.h"
 
 #define BUF_SIZE (1024)
+#define TRUE (1)
+#define FALSE (0)
 #define SUCCESS (1)
 #define PARSE_ERROR (-1)
 #define CRLF ("\r\n")
@@ -255,6 +257,9 @@ int parse_request(http_request *request, socket_t *sock) {
   return parse_all_headers(request, sock, buf);
 } /* parse_request() */
 
+/*
+ * This function is used to get the value of the header key.
+ */
 
 char *get_header_value(const http_request *request, char *key) {
   for (int i = 0; i < request->num_headers; i++) {
@@ -263,8 +268,48 @@ char *get_header_value(const http_request *request, char *key) {
     }
   }
   return NULL;
-}
+} /* get_header_value() */
 
+/*
+ * This function is used to add a header to a response.
+ */
+
+void add_header_to_response(http_response *response, header *head) {
+  response->headers[reponse->num_headers++] = *head;
+} /* add_header_to_response() */
+
+/*
+ * This function is used to check if a request is authorized.
+ */
+
+int is_authorized(http_response resp, http_request req) {
+  char *auth = get_header_value(&req, AUTH_HEADER);
+
+  /* Ensure that there is a Authorization header */
+
+  if (auth != NULL) {
+    char *space = strchr(auth, ' ');
+    space++;
+    char *base64 = substring(space, 0, strlen(space));
+
+    /* Ensure that the username and password are correct */
+
+    if (!strcmp(base64, g_user_pass)) {
+      /* Authorized */
+      return TRUE;
+    }
+  }
+
+  /* Not Authorized */
+
+  header *head = {0};
+  head->key = "WWW-Authenticate";
+  head->value = "Basic realm=\"hardcode\"";
+  add_header_to_response(&resp, head);
+  resp.status_code = 401;
+  resp.reason_phrase = status_code(resp.status_code);
+  return FALSE;
+} /* is_authorized() */
 
 /*
  * Handle an incoming connection on the passed socket.
@@ -284,33 +329,19 @@ void handle(socket_t *sock) {
   }
   print_request(&request);
 
-  char *auth = get_header_value(&request, AUTH_HEADER);
-  if (auth == NULL) {
-    // TODO: Send a unatuthorized response
-    fprintf(stderr, "No Authorization header\n");
-  }
-  else {
-    char *space = strchr(auth, ' ');
-    space++;
-    char *base64 = substring(space, 0, strlen(space));
-
-    printf("Auth: {%s}\n", base64);
-    printf("Real: {%s}\n", g_user_pass);
-
-    if (strcmp(base64, g_user_pass)) {
-      fprintf(stderr, "Unauthorized\n");
-    }
-  }
-
-
   http_response response = {0};
+
+  if(is_authorized(response, request)) {
+    // TODO Handle a request that is authorized
+  }
+
 
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
 
 //  response = handle_htdocs(&request);
 
-  response.http_version = "HTTP/1.1";
+  response.http_version = request.http_version;
 
   char *to_string = response_string(&response);
   printf("%s\n", to_string);
@@ -321,3 +352,11 @@ void handle(socket_t *sock) {
 
   close_socket(sock);
 } /* handle() */
+
+
+http_response handle_htdocs(const http_request *request) {
+  http_response resp = {0};
+  resp.http_version = request->http_version;
+  resp.status_code = 200;
+  resp.reason_phrase = status_reason(resp.status_code);
+}
