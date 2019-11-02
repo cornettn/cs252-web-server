@@ -21,4 +21,4 @@ routes route_map[] = {
     {"", &handle_default}
 };
 
-#endif  // INCLUDE_ROUTES_HH_
+#endif  // ROUTES_H
