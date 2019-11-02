@@ -126,6 +126,7 @@ char *append_headers(char *str, http_response *resp) {
   header *headers = resp->headers;
   for (int i = 0; i < resp->num_headers; i++) {
     str = append(str, headers[i].key);
+    str = append(str, ":");
     str = append(str, SPACE);
     str = append(str, headers[i].value);
     str = append(str, CRLF);
