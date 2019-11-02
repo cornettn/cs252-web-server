@@ -354,9 +354,10 @@ void handle(socket_t *sock) {
 } /* handle() */
 
 
-http_response handle_htdocs(const http_request *request) {
+/*http_response handle_htdocs(const http_request *request) {
   http_response resp = {0};
   resp.http_version = request->http_version;
   resp.status_code = 200;
   resp.reason_phrase = status_reason(resp.status_code);
-}
+}*/
+
