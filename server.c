@@ -286,32 +286,33 @@ void handle(socket_t *sock) {
   char *auth = get_header_value(&request, AUTH_HEADER);
   if (auth == NULL) {
     // TODO: Send a unatuthorized response
-    printf("No Auth\n");
+    fprintf(stderr, "No Authorization header\n");
   }
   else {
     char *space = strchr(auth, ' ');
     space++;
     char *base64 = substring(space, 0, strlen(space));
-    printf("Auth: {%s}\n", base64);
-    printf("Real: {%s}\n", g_user_pass);
+    if (strcmp(base64, g_user_pass)) {
+      fprintf(stderr, "Unauthorized\n");
+    }
   }
 
 
-//  http_response response = {0};
+  http_response response = {0};
 
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
 
 //  response = handle_htdocs(&request);
 
-//  response.http_version = "HTTP/1.1";
+  response.http_version = "HTTP/1.1";
 
-//  char *to_string = response_string(&response);
-//  printf("%s\n", to_string);
-//  socket_write_string(sock, to_string);
+  char *to_string = response_string(&response);
+  printf("%s\n", to_string);
+  socket_write_string(sock, to_string);
 
-//  free(to_string);
-//  to_string = NULL;
+  free(to_string);
+  to_string = NULL;
 
   close_socket(sock);
 } /* handle() */
