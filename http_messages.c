@@ -139,7 +139,7 @@ char *response_string(http_response *resp) {
                                            strlen(resp->http_version) +
                                            1));
   strcpy(to_string, resp->http_version);
-  strcat(to_string, incorrect);
+  strcat(to_string, str);
   return to_string;
 } /* response_string() */
 
