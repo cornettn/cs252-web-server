@@ -110,6 +110,12 @@ char *get_header_value(const http_request *request, char *key) {
 }
 */
 
+char *append(char *str, char *appen) {
+  str = realloc(str, strlen(str) + strlen(appen));
+  strcat(str, appen);
+  return str;
+}
+
 /*
  * Create the actual response string to be sent over the socket, based
  * on the parameter.
@@ -118,6 +124,10 @@ char *get_header_value(const http_request *request, char *key) {
 char *response_string(http_response *resp) {
   // TODO: Replace this code and correctly create the HTTP response from the
   // argument
+
+  char *str = malloc(100);
+  sprintf(str, "%d", resp->status_code);
+  printf("{%s}\n", str);
 
   char *incorrect = resp->status_code SPACE resp->reason_phrase CRLF
     "Connection: close\r\n"
