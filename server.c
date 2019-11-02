@@ -11,6 +11,7 @@
 #define SUCCESS (1)
 #define PARSE_ERROR (-1)
 #define CRLF ("\r\n")
+#define AUTH_HEADER ("Authorization")
 
 int parse_request(http_request *, socket_t *);
 char *substring(char *, int, int);
@@ -254,11 +255,24 @@ int parse_request(http_request *request, socket_t *sock) {
   return parse_all_headers(request, sock, buf);
 } /* parse_request() */
 
+
+char *get_header_value(const http_request *request, char *key) {
+  for (int i = 0; i < request->num_headers; i++) {
+    if (!strcmp(request->headers[i].key, key)) {
+      return request->headers[i].value;
+    }
+  }
+  return NULL;
+}
+
+
 /*
  * Handle an incoming connection on the passed socket.
  */
 
 void handle(socket_t *sock) {
+  return_user_pwd_string();
+
   http_request request = {0};
 
   // PRIORITY 1
@@ -269,6 +283,12 @@ void handle(socket_t *sock) {
     fprintf(stderr, "Error parsing the request\n");
   }
   print_request(&request);
+
+  char *auth = get_header_value(&request, AUTH_HEADER);
+  if (auth == NULL) {
+    printf("No Auth\n");
+  }
+
 
   http_response response = {0};
 

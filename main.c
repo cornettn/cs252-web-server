@@ -25,8 +25,6 @@ void print_usage(char *name) {
  */
 
 int main(int argc, char **argv) {
-  return_user_pwd_string();
-
   // default to linear
 
   concurrency_mode mode = E_NO_CONCURRENCY;
