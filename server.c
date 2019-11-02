@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #include "http_messages.h"
-//#include "routes.h"
+#include "routes.h"
 
 #define BUF_SIZE (1024)
 #define TRUE (1)
