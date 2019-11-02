@@ -341,9 +341,9 @@ void handle(socket_t *sock) {
 
 //  response = handle_htdocs(&request);
 
-  response.http_version = request.http_version;
+  response->http_version = request.http_version;
 
-  char *to_string = response_string(&response);
+  char *to_string = response_string(response);
   printf("%s\n", to_string);
   socket_write_string(sock, to_string);
 
