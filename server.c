@@ -261,7 +261,7 @@ int parse_request(http_request *request, socket_t *sock) {
  * This function is used to get the value of the header key.
  */
 
-char *get_header_value(const http_request *request, char *key) {
+char *get_header_value(http_request *request, char *key) {
   for (int i = 0; i < request->num_headers; i++) {
     if (!strcmp(request->headers[i].key, key)) {
       return request->headers[i].value;
