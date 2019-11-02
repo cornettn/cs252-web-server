@@ -131,7 +131,7 @@ char *append_headers(char *str, http_response *resp) {
     str = append(str, headers[i].value);
     str = append(str, CRLF);
   }
-
+  str = append(str, CRLF);
   return str;
 }
 
@@ -153,13 +153,14 @@ char *response_string(http_response *resp) {
 
   str = append_headers(str, resp);
 
-
   char *incorrect = "Connection: close\r\n"
     "Content-Length: 12\r\n"
     "\r\n"
     "Hello CS252!\r\n";
 
-  str = append(str, incorrect);
+  char *data = "Hello CS252!\r\n";
+
+  str = append(str, data);
 
   char *to_string = malloc(sizeof(char) * (strlen(str) +
                                            strlen(resp->http_version) +
