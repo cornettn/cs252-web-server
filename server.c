@@ -293,6 +293,10 @@ void handle(socket_t *sock) {
     char *space = strchr(auth, ' ');
     space++;
     char *base64 = substring(space, 0, strlen(space));
+
+    printf("Auth: {%s}\n", auth);
+    printf("Real: {%s}\n", g_user_pass);
+
     if (strcmp(base64, g_user_pass)) {
       fprintf(stderr, "Unauthorized\n");
     }
