@@ -329,7 +329,7 @@ void handle(socket_t *sock) {
   }
   print_request(&request);
 
-  http_response response = {0};
+  http_response response = (http_response) malloc(sizeof(http_response));
 
   if(is_authorized(response, request)) {
     // TODO Handle a request that is authorized
