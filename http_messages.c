@@ -119,17 +119,16 @@ char *response_string(http_response *resp) {
   // TODO: Replace this code and correctly create the HTTP response from the
   // argument
 
-  char *incorrect = "" resp->http_version SPACE
-    resp->status_code SPACE resp->reason_phrase CRLF
+  char *incorrect = resp->status_code SPACE resp->reason_phrase CRLF
     "Connection: close\r\n"
     "Content-Length: 12\r\n"
     "\r\n"
     "Hello CS252!\r\n";
 
   char *to_string = malloc(sizeof(char) * (strlen(incorrect) +
-                                           strlen(response->http_version) +
+                                           strlen(resp->http_version) +
                                            1));
-  strcpy(to_string, response->http_version);
+  strcpy(to_string, resp->http_version);
   strcat(to_string, incorrect);
   return to_string;
 } /* response_string() */
