@@ -135,7 +135,7 @@ char *response_string(http_response *resp) {
     "\r\n"
     "Hello CS252!\r\n";
 */
-  char *to_string = malloc(sizeof(char) * (strlen(incorrect) +
+  char *to_string = malloc(sizeof(char) * (strlen(str) +
                                            strlen(resp->http_version) +
                                            1));
   strcpy(to_string, resp->http_version);
