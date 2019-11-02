@@ -1,5 +1,5 @@
-#ifndef INCLUDE_ROUTES_HH_
-#define INCLUDE_ROUTES_HH_
+#ifndef ROUTES_H
+#define ROUTES_H
 
 #include "http_messages.h"
 
