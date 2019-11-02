@@ -110,11 +110,30 @@ char *get_header_value(const http_request *request, char *key) {
 }
 */
 
+/*
+ * This function is used to append a string to another
+ */
+
 char *append(char *str, char *appen) {
   str = realloc(str, strlen(str) + strlen(appen));
   strcat(str, appen);
   return str;
+} /* append() */
+
+
+
+char *append_headers(char *str, http_response *resp) {
+  header *headers = resp->headers;
+  for (int i = 0; i < resp->num_headers; i++) {
+    str = append(str, headers[i].key);
+    str = append(str, SPACE);
+    str = append(str, headers[i].value);
+    str = append(str, CRLF);
+  }
+
+  return str;
 }
+
 
 /*
  * Create the actual response string to be sent over the socket, based
@@ -126,10 +145,12 @@ char *response_string(http_response *resp) {
   // argument
 
   char *str = malloc(100);
-  sprintf(str, "%d", resp->status_code);
+  sprintf(str, " %d", resp->status_code);
   str = append(str, SPACE);
   str = append(str, resp->reason_phrase);
   str = append(str, CRLF);
+
+  str = append_headers(str, resp);
 
 
   char *incorrect = "Connection: close\r\n"
