@@ -290,6 +290,7 @@ void handle(socket_t *sock) {
   }
   else {
     printf("Auth: {%s}\n", auth);
+    printf("Real: {%s}\n", g_user_pass);
   }
 
 
