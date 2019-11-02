@@ -119,7 +119,7 @@ char *response_string(http_response *response) {
   // TODO: Replace this code and correctly create the HTTP response from the
   // argument
 
-  char *incorrect = response->http_version SPACE
+  char *incorrect = "" response->http_version SPACE
     response->status_code SPACE response->reason_phrase CRLF
     "Connection: close\r\n"
     "Content-Length: 12\r\n"
