@@ -274,7 +274,7 @@ void handle(socket_t *sock) {
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
 
-  response = handle_htdocs(&request);
+  handle_htdocs(&request);
 
   response.http_version = "HTTP/1.1";
 
