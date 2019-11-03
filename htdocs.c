@@ -89,7 +89,7 @@ http_response handle_htdocs(const http_request *request) {
 
   /* Not a directory and file exists */
 
-  absolute_path = get_realpath(full_url);
+  char *absolute_path = get_realpath(full_url);
   char *content_type = get_content_type(absolute_path);
   printf("%s\n", content_type);
 
