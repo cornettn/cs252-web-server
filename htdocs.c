@@ -11,6 +11,7 @@
 #include <errno.h>
 
 #include "misc.h"
+#include "routes.h"
 
 #define FRONTSLASH ('/')
 #define INDEX ("index.html")
@@ -79,6 +80,7 @@ http_response handle_htdocs(const http_request *request) {
         printf("%s does not exist\n", full_url);
         // TODO Send a 404 response
         printf("404\n");
+        return handle_default(request);
       }
     }
     else {
@@ -94,13 +96,13 @@ http_response handle_htdocs(const http_request *request) {
     // TODO Send a 404 response
     printf("%s does not exist\n", full_url);
     printf("404\n");
+    return handle_default(request);
   }
   else {
     printf("%s does exist\n", full_url);
   }
 
   /* File exists */
-
 
   /* Not a directory and file exists */
 
