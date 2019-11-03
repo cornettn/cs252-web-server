@@ -176,6 +176,19 @@ char *response_string(http_response *resp) {
   return to_string;
 } /* response_string() */
 
+
+/*
+ * This function is used to add a header to a response.
+ */
+
+void add_header_to_response(http_response *response, header *head) {
+  response->num_headers++;
+  response->headers = realloc(response->headers,
+      response->num_headers * sizeof(header));
+  response->headers[response->num_headers - 1] = *head;
+} /* add_header_to_response() */
+
+
 /*
  * Print the request to stdout, useful for debugging.
  */

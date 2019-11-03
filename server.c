@@ -270,16 +270,6 @@ char *get_header_value(http_request *request, char *key) {
   return NULL;
 } /* get_header_value() */
 
-/*
- * This function is used to add a header to a response.
- */
-
-void add_header_to_response(http_response *response, header *head) {
-  response->num_headers++;
-  response->headers = realloc(response->headers,
-      response->num_headers * sizeof(header));
-  response->headers[response->num_headers - 1] = *head;
-} /* add_header_to_response() */
 
 /*
  * This function is used to check if a request is authorized.

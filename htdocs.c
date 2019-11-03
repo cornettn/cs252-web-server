@@ -65,7 +65,6 @@ http_response handle_htdocs(const http_request *request) {
   char *absolute_path = get_realpath(full_url);
 
   if (is_directory(absolute_path)) {
-    printf("%s is a directory\n", absolute_path);
     if (absolute_path[strlen(absolute_path) - 1] != FRONTSLASH) {
 
       /* Request will server the directory/index.html */
@@ -75,9 +74,9 @@ http_response handle_htdocs(const http_request *request) {
                                             strlen(INDEX));
       sprintf(absolute_path, "%s%c%s", absolute_path, FRONTSLASH, INDEX);
       if (!exists(absolute_path)) {
-        printf("%s does not exist\n", absolute_path);
-        // TODO Send a 404 response
-        printf("404\n");
+
+        /* Send a 404 Response */
+
         return handle_default(request);
       }
     }
@@ -86,18 +85,12 @@ http_response handle_htdocs(const http_request *request) {
       printf("Browsable\n");
     }
   }
-  else {
-    printf("%s is not a dir\n", absolute_path);
-  }
 
   if (!exists(full_url)) {
-    // TODO Send a 404 response
-    printf("%s does not exist\n", absolute_path);
-    printf("404\n");
+
+    /* Return a 404 response */
+
     return handle_default(request);
-  }
-  else {
-    printf("%s does exist\n", absolute_path);
   }
 
   /* File exists */

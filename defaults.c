@@ -12,6 +12,6 @@ http_response handle_default(const http_request *request) {
     resp.status_code = 404;
     char *msg = (char *) status_reason(resp.status_code);
     resp.reason_phrase = msg;
-    resp.message_body = "404 File Not Found"
+    resp.message_body = "404 File Not Found";
     return resp;
 } /* handle_default() */
