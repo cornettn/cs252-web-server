@@ -297,8 +297,8 @@ int is_authorized(http_response *resp, http_request *req) {
     base64 = strcat(base64, "\n");
 
 
-    printf("{%s}\n", base64);
-    printf("{%s}\n", g_user_pass);
+    printf("Request: {%s}\n", base64);
+    printf("Require: {%s}\n", g_user_pass);
 
     /* Ensure that the username and password are correct */
 
