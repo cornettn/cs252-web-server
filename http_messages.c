@@ -190,6 +190,20 @@ void add_header_to_response(http_response *response, header *head) {
 
 
 /*
+ * This function is used to find a substring of a buf.
+ */
+
+char *substring(char *buf, int start, int end) {
+  char *new_str = (char *) malloc(end - start + 1);
+  for (int i = 0; i < end - start; i++) {
+    new_str[i] = buf[start + i];
+  }
+  new_str[end - start] = '\0';
+  return new_str;
+} /* substring */
+
+
+/*
  * Print the request to stdout, useful for debugging.
  */
 

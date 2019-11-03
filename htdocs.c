@@ -100,6 +100,8 @@ http_response handle_htdocs(const http_request *request) {
   char *content_type = get_content_type(absolute_path);
   printf("%s\n", content_type);
 
+  char *semi_colon = strchr(content_type, ';');
+
   return *resp;
 }
 

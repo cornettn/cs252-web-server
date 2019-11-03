@@ -87,18 +87,6 @@ void run_thread_pool_server(acceptor *acceptor, int num_threads) {
 } /* run_thread_pool_server() */
 
 
-/*
- * This function is used to find a substring of a buf.
- */
-
-char *substring(char *buf, int start, int end) {
-  char *new_str = (char *) malloc(end - start + 1);
-  for (int i = 0; i < end - start; i++) {
-    new_str[i] = buf[start + i];
-  }
-  new_str[end - start] = '\0';
-  return new_str;
-} /* substring */
 
 
 /*

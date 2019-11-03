@@ -35,6 +35,7 @@ void print_request(http_request *request);
 
 void add_header_to_response(http_response *response, header *head);
 
+char *substring(char *buf, int start, int end);
 //char *get_header_value(const http_request *request, char *key);
 
 #endif // HTTP_MESSAGES_H
