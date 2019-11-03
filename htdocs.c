@@ -64,7 +64,7 @@ http_response handle_htdocs(const http_request *request) {
 
 
   if (is_directory(full_url)) {
-    printf("Dir\n");
+    printf("%s is a directory\n", full_url);
     if (full_url[strlen(full_url) - 1] != FRONTSLASH) {
 
       /* Request will server the directory/index.html */
@@ -84,11 +84,17 @@ http_response handle_htdocs(const http_request *request) {
       printf("Browsable\n");
     }
   }
+  else {
+    printf("%s is not a dir\n", full_url);
+  }
 
   if (!exists(full_url)) {
     // TODO Send a 404 response
     printf("%s does not exist\n", full_url);
     printf("404\n");
+  }
+  else {
+    printf("%s does exist\n", full_url);
   }
 
   /* File exists */
