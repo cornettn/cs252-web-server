@@ -6,7 +6,21 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
+int is_directory(char *filepath) {
+  char *full_path = (char *) malloc(PATH_MAX);
+  full_path = realpath(filepath, full_path);
+  struct stat buf = {0};
+  if (stat(full_path, &buf) != 0) {
+
+    /* Some type of error occured */
+
+    return 0;
+  }
+  return S_ISDIR(buf.st_mode);
+}
 
 int exists(char *filepath) {
   char *full_path = (char *) malloc(PATH_MAX);
@@ -30,14 +44,23 @@ http_response handle_htdocs(const http_request *request) {
     // char *referer = get_header_value(request, REFERER);
     // printf("%s\n", referer);
 
-    // TODO: Get the request URL, verify the file exists, and serve it
+  // TODO: Get the request URL, verify the file exists, and serve it
+
+  /* Get the requested URL */
 
   char *url = request->request_uri;
   char *full_url = (char *) malloc(strlen(url) + strlen(ROOT));
   sprintf(full_url, "%s%s", ROOT, url);
-  printf("url: %s\n", full_url);
-  if (exists(full_url)) {
-    printf("File Exists\n");
+
+
+  if (!exists(full_url)) {
+    // TODO Send a 404 response
+  }
+
+  /* File exists */
+
+  if (is_directory(full_url)) {
+    printf("Dir\n");
   }
 
   return *resp;
