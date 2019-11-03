@@ -98,7 +98,6 @@ http_response handle_htdocs(const http_request *request) {
   /* Not a directory and file exists */
 
   char *content_type = get_content_type(absolute_path);
-  printf("%s\n", content_type);
 
   char *semi_colon = strchr(content_type, ';');
   char *type = substring(content_type, 0, semi_colon - content_type);
@@ -108,6 +107,7 @@ http_response handle_htdocs(const http_request *request) {
   head->value = type;
 
   add_header_to_response(resp, head);
+  printf("%s\n", type);
 
   return *resp;
 }
