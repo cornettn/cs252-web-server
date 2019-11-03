@@ -6,7 +6,7 @@
 
 #define SPACE (" ")
 #define CRLF ("\r\n")
-#define MAIN_DIRECTORY("http-root-dir/htdocs")
+#define MAIN_DIRECTORY ("http-root-dir/htdocs")
 
 
 /*
