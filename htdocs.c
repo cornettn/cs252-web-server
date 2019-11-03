@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <unistd.h>
+#include <string.h>
 
 /*
  * You should implement this function and use it in server.c
