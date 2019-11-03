@@ -14,7 +14,7 @@
 
 char *get_realpath(char *relative) {
   char *full_path = (char *) malloc(PATH_MAX);
-  full_path = realpath(filepath, full_path);
+  full_path = realpath(relative, full_path);
   return full_path;
 }
 
