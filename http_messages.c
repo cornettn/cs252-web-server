@@ -178,6 +178,20 @@ char *response_string(http_response *resp) {
 
 
 /*
+ * This function is used to get the value of the header key.
+ */
+
+char *get_header_value(http_request *request, char *key) {
+  for (int i = 0; i < request->num_headers; i++) {
+    if (!strcmp(request->headers[i].key, key)) {
+      return request->headers[i].value;
+    }
+  }
+  return NULL;
+} /* get_header_value() */
+
+
+/*
  * This function is used to add a header to a response.
  */
 

@@ -245,18 +245,6 @@ int parse_request(http_request *request, socket_t *sock) {
   return parse_all_headers(request, sock, buf);
 } /* parse_request() */
 
-/*
- * This function is used to get the value of the header key.
- */
-
-char *get_header_value(http_request *request, char *key) {
-  for (int i = 0; i < request->num_headers; i++) {
-    if (!strcmp(request->headers[i].key, key)) {
-      return request->headers[i].value;
-    }
-  }
-  return NULL;
-} /* get_header_value() */
 
 
 /*
@@ -348,12 +336,4 @@ void handle(socket_t *sock) {
 
   close_socket(sock);
 } /* handle() */
-
-
-/*http_response handle_htdocs(const http_request *request) {
-  http_response resp = {0};
-  resp.http_version = request->http_version;
-  resp.status_code = 200;
-  resp.reason_phrase = status_reason(resp.status_code);
-}*/
 
