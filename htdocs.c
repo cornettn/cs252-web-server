@@ -62,13 +62,6 @@ http_response handle_htdocs(const http_request *request) {
   sprintf(full_url, "%s%s", ROOT, url);
 
 
-  if (!exists(full_url)) {
-    // TODO Send a 404 response
-    printf("%s does not exist\n", full_url);
-    printf("404\n");
-  }
-
-  /* File exists */
 
   if (is_directory(full_url)) {
     printf("Dir\n");
@@ -88,8 +81,18 @@ http_response handle_htdocs(const http_request *request) {
     }
     else {
       /* Browsable directories */
+      printf("Browsable\n");
     }
   }
+
+  if (!exists(full_url)) {
+    // TODO Send a 404 response
+    printf("%s does not exist\n", full_url);
+    printf("404\n");
+  }
+
+  /* File exists */
+
 
   /* Not a directory and file exists */
 
