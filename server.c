@@ -6,7 +6,6 @@
 
 #include "http_messages.h"
 #include "routes.h"
-#include "base64.h"
 
 #define BUF_SIZE (1024)
 #define TRUE (1)
