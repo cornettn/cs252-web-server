@@ -6,6 +6,7 @@
 
 #include "http_messages.h"
 #include "routes.h"
+#include "base64.h"
 
 #define BUF_SIZE (1024)
 #define TRUE (1)
@@ -264,6 +265,12 @@ int is_authorized(http_response *resp, http_request *req) {
 
 
     printf("Request: {%s}\n", base64);
+
+    char *decoded = (char *) malloc(1024);
+    Base64decode(decoded, base64);
+
+    printf("decoded: {%s}\n", decoded);
+
     printf("Require: {%s}\n", g_user_pass);
 
     /* Ensure that the username and password are correct */
