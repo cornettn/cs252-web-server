@@ -17,7 +17,7 @@
 char *get_realpath(char *relative) {
   char *full_path = (char *) malloc(PATH_MAX);
   full_path = realpath(relative, full_path);
-  printf("rel:  %s\nfull: %s\n", relative, full);
+  printf("rel:  %s\nfull: %s\n", relative, full_path);
   return full_path;
 }
 
