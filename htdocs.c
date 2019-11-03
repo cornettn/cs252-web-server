@@ -64,6 +64,7 @@ http_response handle_htdocs(const http_request *request) {
 
   if (!exists(full_url)) {
     // TODO Send a 404 response
+    printf("404\n");
   }
 
   /* File exists */
@@ -80,6 +81,7 @@ http_response handle_htdocs(const http_request *request) {
       sprintf(full_url, "%s%c%s", full_url, FRONTSLASH, INDEX);
       if (!exists(full_url)) {
         // TODO Send a 404 response
+        printf("404\n");
       }
     }
     else {
