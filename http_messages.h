@@ -1,7 +1,7 @@
 #ifndef HTTP_MESSAGES_H
 #define HTTP_MESSAGES_H
 
-#define ROOT ("http-root-dir/htdocs")
+#define ROOT ("./http-root-dir/htdocs")
 
 const char *status_reason(int status);
 
