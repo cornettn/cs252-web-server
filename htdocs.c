@@ -24,8 +24,7 @@ char *get_realpath(char *relative) {
 }
 
 
-int is_directory(char *filepath) {
-  char *full_path = get_realpath(filepath);
+int is_directory(char *full_path) {
   struct stat buf = {0};
   if (stat(full_path, &buf) != 0) {
 
@@ -36,8 +35,7 @@ int is_directory(char *filepath) {
   return S_ISDIR(buf.st_mode);
 }
 
-int exists(char *filepath) {
-  char *full_path = get_realpath(filepath);
+int exists(char *full_path) {
   return (access(full_path, F_OK) == 0);
 }
 
@@ -64,20 +62,20 @@ http_response handle_htdocs(const http_request *request) {
   char *full_url = (char *) malloc(strlen(url) + strlen(ROOT));
   sprintf(full_url, "%s%s", ROOT, url);
 
+  char *absolute_path = get_realpath(full_url);
 
-
-  if (is_directory(full_url)) {
-    printf("%s is a directory\n", full_url);
+  if (is_directory(absolute_path)) {
+    printf("%s is a directory\n", absolute_path);
     if (full_url[strlen(full_url) - 1] != FRONTSLASH) {
 
       /* Request will server the directory/index.html */
 
-      full_url = (char *) realloc(full_url, strlen(full_url) +
+      absolute_path = (char *) realloc(absolute_path, strlen(full_url) +
                                             1 +
                                             strlen(INDEX));
-      sprintf(full_url, "%s%c%s", full_url, FRONTSLASH, INDEX);
-      if (!exists(full_url)) {
-        printf("%s does not exist\n", full_url);
+      sprintf(absolute_path, "%s%c%s", absolute_path, FRONTSLASH, INDEX);
+      if (!exists(absolute_path)) {
+        printf("%s does not exist\n", absolute_path);
         // TODO Send a 404 response
         printf("404\n");
         return handle_default(request);
@@ -89,24 +87,23 @@ http_response handle_htdocs(const http_request *request) {
     }
   }
   else {
-    printf("%s is not a dir\n", full_url);
+    printf("%s is not a dir\n", absolute_path);
   }
 
   if (!exists(full_url)) {
     // TODO Send a 404 response
-    printf("%s does not exist\n", full_url);
+    printf("%s does not exist\n", absolute_path);
     printf("404\n");
     return handle_default(request);
   }
   else {
-    printf("%s does exist\n", full_url);
+    printf("%s does exist\n", absolute_path);
   }
 
   /* File exists */
 
   /* Not a directory and file exists */
 
-  char *absolute_path = get_realpath(full_url);
   char *content_type = get_content_type(absolute_path);
   printf("%s\n", content_type);
 
