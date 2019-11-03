@@ -11,7 +11,7 @@
 #include <errno.h>
 
 #include "misc.h"
-//#include "routes.h"
+#include "routes.h"
 
 #define FRONTSLASH ('/')
 #define INDEX ("index.html")
