@@ -80,6 +80,7 @@ http_response handle_htdocs(const http_request *request) {
                                             strlen(INDEX));
       sprintf(full_url, "%s%c%s", full_url, FRONTSLASH, INDEX);
       if (!exists(full_url)) {
+        printf("%s does not exist\n", full_url);
         // TODO Send a 404 response
         printf("404\n");
       }
