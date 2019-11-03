@@ -32,7 +32,7 @@ int is_directory(char *filepath) {
 }
 
 int exists(char *filepath) {
-  full_path = get_realpath(filepath);
+  char *full_path = get_realpath(filepath);
   return (access(full_path, F_OK) == 0);
 }
 
