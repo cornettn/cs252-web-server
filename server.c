@@ -263,16 +263,6 @@ int is_authorized(http_response *resp, http_request *req) {
     char *base64 = substring(space, 0, strlen(space));
     base64 = strcat(base64, "\n");
 
-
-    printf("Request: {%s}\n", base64);
-
-    char *decoded = (char *) malloc(1024);
-    Base64decode(decoded, base64);
-
-    printf("decoded: {%s}\n", decoded);
-
-    printf("Require: {%s}\n", g_user_pass);
-
     /* Ensure that the username and password are correct */
 
     if (!strcmp(base64, g_user_pass)) {
@@ -321,8 +311,6 @@ void handle(socket_t *sock) {
   response->headers = NULL;
 
   if(is_authorized(response, &request)) {
-    // TODO Handle a request that is authorized
-    printf("YAYYYY Authorized!\n");
     http_response resp = handle_htdocs(&request);
     response = &resp;
   }
@@ -330,8 +318,6 @@ void handle(socket_t *sock) {
 
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
-
-  //response = handle_htdocs(&request);
 
 
   char *to_string = response_string(response);
