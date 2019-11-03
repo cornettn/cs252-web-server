@@ -77,7 +77,7 @@ http_response handle_htdocs(const http_request *request) {
       full_url = (char *) realloc(full_url, strlen(full_url) +
                                             1 +
                                             strlen(INDEX));
-      full_url = sprintf(full_url, "%s%c%s", full_url, FRONTSLASH, INDEX);
+      sprintf(full_url, "%s%c%s", full_url, FRONTSLASH, INDEX);
       if (!exists(full_url)) {
         // TODO Send a 404 response
       }
