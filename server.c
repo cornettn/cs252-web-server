@@ -295,6 +295,9 @@ int is_authorized(http_response *resp, http_request *req) {
     space++;
     char *base64 = substring(space, 0, strlen(space));
 
+    printf("%s\n", auth);
+    printf("%s\n", base64);
+
     /* Ensure that the username and password are correct */
 
     if (!strcmp(base64, g_user_pass)) {
@@ -339,6 +342,7 @@ void handle(socket_t *sock) {
 
   if(is_authorized(response, &request)) {
     // TODO Handle a request that is authorized
+    printf("YAYYYY Authorized!\n");
   }
 
 

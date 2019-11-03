@@ -153,10 +153,12 @@ char *response_string(http_response *resp) {
 
   str = append_headers(str, resp);
 
+  /*
   char *incorrect = "Connection: close\r\n"
     "Content-Length: 12\r\n"
     "\r\n"
     "Hello CS252!\r\n";
+*/
 
   char *data = "Hello CS252!\r\n";
 
