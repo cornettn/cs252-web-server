@@ -12,7 +12,7 @@ int exists(char *filepath) {
   char *full_path = (char *) malloc(PATH_MAX);
   full_path = realpath(filepath, full_path);
   printf("Full path: %s\n", full_path);
-  return access(full_path);
+  return access(full_path, F_OK);
 }
 
 /*
