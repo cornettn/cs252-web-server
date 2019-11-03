@@ -12,7 +12,7 @@ int exists(char *filepath) {
   char *full_path = (char *) malloc(PATH_MAX);
   full_path = realpath(filepath, full_path);
   printf("Full path: %s\n", full_path);
-  return access(full_path, F_OK);
+  return (access(full_path, F_OK) == 0);
 }
 
 /*
@@ -36,7 +36,9 @@ http_response handle_htdocs(const http_request *request) {
   char *full_url = (char *) malloc(strlen(url) + strlen(ROOT));
   sprintf(full_url, "%s%s", ROOT, url);
   printf("url: %s\n", full_url);
-  exists(full_url);
+  if (exists(full_url)) {
+    printf("File Exists\n");
+  }
 
   return *resp;
 }
