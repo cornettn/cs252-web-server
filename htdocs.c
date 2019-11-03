@@ -66,7 +66,7 @@ http_response handle_htdocs(const http_request *request) {
 
   if (is_directory(absolute_path)) {
     printf("%s is a directory\n", absolute_path);
-    if (full_url[strlen(full_url) - 1] != FRONTSLASH) {
+    if (absolute_path[strlen(absolute_path) - 1] != FRONTSLASH) {
 
       /* Request will server the directory/index.html */
 
