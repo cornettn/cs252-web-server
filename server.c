@@ -316,7 +316,11 @@ int is_authorized(http_response *resp, http_request *req) {
   add_header_to_response(resp, head);
   resp->status_code = 401;
   resp->reason_phrase = strdup(status_reason(resp->status_code));
-  return FALSE;
+  //return FALSE;
+
+  // TODO Change back to FALSE after testing
+
+  return TRUE;
 } /* is_authorized() */
 
 /*
@@ -328,14 +332,15 @@ void handle(socket_t *sock) {
 
   http_request request = {0};
 
-  // PRIORITY 1
-  // TODO: Replace this code and actually parse the HTTP request
+  /* Parse the Request */
 
   int value = parse_request(&request, sock);
   if (value == PARSE_ERROR) {
     fprintf(stderr, "Error parsing the request\n");
   }
   print_request(&request);
+
+  /* Write the response */
 
   http_response *response = (http_response *) malloc(sizeof(http_response));
   response->http_version = request.http_version;
