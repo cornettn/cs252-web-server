@@ -1,6 +1,7 @@
 #include "http_messages.h"
 
 #include <stdio.h>
+#include <malloc.h>
 #include <unistd.h>
 
 /*
@@ -8,7 +9,7 @@
  */
 
 http_response handle_htdocs(const http_request *request) {
-    http_response *resp = (http_response *) malloc(sizeof(http_reponse));
+    http_response *resp = (http_response *) malloc(sizeof(http_response));
     resp->http_version = request->http_version;
     resp->num_headers = 0;
     resp->headers = NULL;
@@ -18,7 +19,7 @@ http_response handle_htdocs(const http_request *request) {
 
     // TODO: Get the request URL, verify the file exists, and serve it
 
-    char *URL = request->request_uri;
+    //char *URL = request->request_uri;
 
 
     return *resp;
