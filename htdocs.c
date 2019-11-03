@@ -9,6 +9,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include "misc.h"
+
 #define FRONTSLASH ('/')
 #define INDEX ("index.html")
 
