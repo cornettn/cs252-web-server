@@ -107,7 +107,9 @@ http_response handle_htdocs(const http_request *request) {
   head->value = type;
 
   add_header_to_response(resp, head);
-  printf("%s\n", type);
+
+  resp->status_code = 200;
+  resp->reason_phrase = (char *) status_reason(resp->status_code);
 
   return *resp;
 }
