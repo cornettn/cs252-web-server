@@ -22,6 +22,8 @@ http_response handle_htdocs(const http_request *request) {
 
     // TODO: Get the request URL, verify the file exists, and serve it
 
+  print_request(request);
+
   char *url = request->request_uri;
   char *full_url = (char *) malloc(strlen(url) + strlen(ROOT));
   sprintf(full_url, "%s%s", ROOT, url);
