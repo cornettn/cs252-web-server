@@ -17,6 +17,7 @@
 char *get_realpath(char *relative) {
   char *full_path = (char *) malloc(PATH_MAX);
   full_path = realpath(relative, full_path);
+  printf("rel:  %s\nfull: %s\n", relative, full);
   return full_path;
 }
 
@@ -58,8 +59,8 @@ http_response handle_htdocs(const http_request *request) {
   /* Get the requested URL */
 
   char *url = request->request_uri;
-  char *full_url = (char *) malloc(strlen(url) + strlen(ROOT)) + 2;
-  sprintf(full_url, "./%s%s", ROOT, url);
+  char *full_url = (char *) malloc(strlen(url) + strlen(ROOT));
+  sprintf(full_url, "%s%s", ROOT, url);
 
 
 
