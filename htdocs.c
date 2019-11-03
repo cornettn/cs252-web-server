@@ -9,9 +9,18 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-int is_directory(char *filepath) {
+#define FRONTSLASH ('/')
+#define INDEX ("index.html")
+
+char *get_realpath(char *relative) {
   char *full_path = (char *) malloc(PATH_MAX);
   full_path = realpath(filepath, full_path);
+  return full_path;
+}
+
+
+int is_directory(char *filepath) {
+  char *full_path = get_realpath(filepath);
   struct stat buf = {0};
   if (stat(full_path, &buf) != 0) {
 
@@ -23,9 +32,7 @@ int is_directory(char *filepath) {
 }
 
 int exists(char *filepath) {
-  char *full_path = (char *) malloc(PATH_MAX);
-  full_path = realpath(filepath, full_path);
-  printf("Full path: %s\n", full_path);
+  full_path = get_realpath(filepath);
   return (access(full_path, F_OK) == 0);
 }
 
@@ -61,7 +68,28 @@ http_response handle_htdocs(const http_request *request) {
 
   if (is_directory(full_url)) {
     printf("Dir\n");
+    if (full_url[strlen(full_url) - 1] != FRONTSLASH) {
+
+      /* Request will server the directory/index.html */
+
+      full_url = (char *) realloc(full_url, strlen(full_url) +
+                                            strlen(FRONTSLASH) +
+                                            strlen(INDEX));
+      full_url = sprintf(full_url, "%s%s%s", full_url, FRONTSLASH, INDEX);
+      if (!exists(full_url)) {
+        // TODO Send a 404 response
+      }
+    }
+    else {
+      /* Browsable directories */
+    }
   }
+
+  /* Not a directory and file exists */
+
+  absolute_path = get_realpath(full_url);
+  char *content_type = get_content_type(absolute_path);
+  printf("%s\n", content_type);
 
   return *resp;
 }
