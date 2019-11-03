@@ -101,6 +101,13 @@ http_response handle_htdocs(const http_request *request) {
   printf("%s\n", content_type);
 
   char *semi_colon = strchr(content_type, ';');
+  char *type = substring(content_type, 0, semi_colon - content_type);
+
+  header *head = (header *) malloc(sizeof(header));
+  head->key = "Content-Type";
+  head->value = type;
+
+  add_header_to_response(resp, head);
 
   return *resp;
 }
