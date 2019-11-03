@@ -1,5 +1,7 @@
 #include "http_messages.h"
 
+#include "routes.h"
+
 /*
  * Default handler for file not found (404)
  */
