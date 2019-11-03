@@ -70,7 +70,7 @@ http_response handle_htdocs(const http_request *request) {
 
       /* Request will server the directory/index.html */
 
-      absolute_path = (char *) realloc(absolute_path, strlen(full_url) +
+      absolute_path = (char *) realloc(absolute_path, strlen(absolute_path) +
                                             1 +
                                             strlen(INDEX));
       sprintf(absolute_path, "%s%c%s", absolute_path, FRONTSLASH, INDEX);
