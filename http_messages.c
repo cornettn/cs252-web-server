@@ -6,6 +6,8 @@
 
 #define SPACE (" ")
 #define CRLF ("\r\n")
+#define MAIN_DIRECTORY("http-root-dir/htdocs")
+
 
 /*
  * Return the reason string for a particular status code. You might find this
