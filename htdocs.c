@@ -64,6 +64,7 @@ http_response handle_htdocs(const http_request *request) {
 
   if (!exists(full_url)) {
     // TODO Send a 404 response
+    printf("%s does not exist\n", full_url);
     printf("404\n");
   }
 
