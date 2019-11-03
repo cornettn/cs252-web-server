@@ -345,7 +345,7 @@ void handle(socket_t *sock) {
   if(is_authorized(response, &request)) {
     // TODO Handle a request that is authorized
     printf("YAYYYY Authorized!\n");
-    response = handle_htdocs(&request);
+    http_response resp = handle_htdocs(&request);
   }
 
 
