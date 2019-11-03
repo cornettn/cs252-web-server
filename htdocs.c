@@ -73,7 +73,7 @@ http_response handle_htdocs(const http_request *request) {
       /* Request will server the directory/index.html */
 
       full_url = (char *) realloc(full_url, strlen(full_url) +
-                                            strlen(FRONTSLASH) +
+                                            1 +
                                             strlen(INDEX));
       full_url = sprintf(full_url, "%s%s%s", full_url, FRONTSLASH, INDEX);
       if (!exists(full_url)) {
