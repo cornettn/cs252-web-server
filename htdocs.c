@@ -113,7 +113,9 @@ http_response handle_htdocs(const http_request *request) {
 
   header *type_head = (header *) malloc(sizeof(header));
   type_head->key = "Content-Type";
-  type_head->value = type;
+  type_head->value = strdup(type);
+  free(type);
+  type = NULL;
 
   add_header_to_response(resp, type_head);
 
@@ -124,7 +126,11 @@ http_response handle_htdocs(const http_request *request) {
 
   header *size = (header *) malloc(sizeof(header));
   size->key = "Content-Length";
-  sprintf(size->value, "%d", get_file_size(absolute_path));
+  char *file_size = (char *) malloc(1024);
+  sprintf(file_size, "%d", get_file_size(absolute_path));
+  size->value = strdup(file_size);
+  free(file_size);
+  file_size = NULL;
   add_header_to_response(resp, size);
 
   resp->status_code = 200;
