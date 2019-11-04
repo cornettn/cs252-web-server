@@ -16,6 +16,13 @@
 #define FRONTSLASH ('/')
 #define INDEX ("index.html")
 
+
+int get_file_size(char *path) {
+  struct stat buf = {0};
+  stat(path, &buf);
+  return (int) buf.st_size;
+}
+
 char *get_realpath(char *relative) {
   char *full_path = (char *) malloc(PATH_MAX);
   full_path = realpath(relative, full_path);
@@ -102,14 +109,25 @@ http_response handle_htdocs(const http_request *request) {
   char *semi_colon = strchr(content_type, ';');
   char *type = substring(content_type, 0, semi_colon - content_type);
 
-  header *head = (header *) malloc(sizeof(header));
-  head->key = "Content-Type";
-  head->value = type;
+  header *type_head = (header *) malloc(sizeof(header));
+  type_head->key = "Content-Type";
+  type_head->value = type;
 
-  add_header_to_response(resp, head);
+  add_header_to_response(resp, type_head);
+
+  header *connection_head = (header *) malloc(sizeof(header));
+  connection_head->key = "Connection";
+  connection_head->value = "Close";
+  add_header_to_response(resp, connection_head);
+
+  header *size = (header *) malloc(sizeof(header));
+  size->key = "Content-Length";
+  sprintf(size->value, "%d", get_file_size(absolute_path));
+  add_header_to_response(resp, size);
 
   resp->status_code = 200;
   resp->reason_phrase = (char *) status_reason(resp->status_code);
+
 
   return *resp;
 }
