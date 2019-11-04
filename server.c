@@ -110,6 +110,13 @@ void run_threaded_server(acceptor *acceptor) {
 
 } /* run_threaded_server() */
 
+void *thread_pool_loop(acceptor *acceptor) {
+  while(1) {
+    socket_t *sock = accept_connection(acceptor);
+    handle(sock);
+  }
+}
+
 /*
  * Accept connections, drawing from a thread pool with num_threads to handle the
  * connections.
@@ -133,12 +140,6 @@ void run_thread_pool_server(acceptor *acceptor, int num_threads) {
 } /* run_thread_pool_server() */
 
 
-void *thread_pool_loop(acceptor *acceptor) {
-  while(1) {
-    socket_t *sock = accept_connection(acceptor);
-    handle(sock);
-  }
-}
 
 
 /*
