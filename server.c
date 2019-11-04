@@ -374,6 +374,8 @@ void handle(socket_t *sock) {
   }
   print_request(&request);
 
+
+
   /* Write the response */
 
   http_response *response = (http_response *) malloc(sizeof(http_response));
@@ -383,6 +385,11 @@ void handle(socket_t *sock) {
 
   if(is_authorized(response, &request)) {
     http_response resp = handle_htdocs(&request);
+    response = &resp;
+  }
+
+  if (!accepted_method(request->method)) {
+    http_response resp = handle_request(&request, 405);
     response = &resp;
   }
 
