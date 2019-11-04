@@ -44,11 +44,13 @@ char *return_user_pwd_string(void) {
 
   fp = fopen("./auth.txt", "r");
   if (fp == NULL) {
+    mylog("fp is NULL");
     perror("couldn't read auth.txt");
     exit(-1);
   }
 
   if (getline(&line, &len, fp) == -1) {
+    mylog("getline error");
     perror("couldn't read auth.txt");
     free(line);
     line = NULL;
