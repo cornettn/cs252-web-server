@@ -476,18 +476,23 @@ void handle(socket_t *sock) {
     response = &resp;
   }
 
-
+  mylog("Response has been generated");
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
 
 
   char *to_string = response_string(response);
-  printf("%s\n", to_string);
+
+  mylog("string generated");
+
   socket_write_string(sock, to_string);
+
+  mylog("Wrote string to socket");
 
   free(to_string);
   to_string = NULL;
 
+  mylog("Closing socket");
   close_socket(sock);
 } /* handle() */
 

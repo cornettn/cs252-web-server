@@ -11,6 +11,7 @@
 #include <errno.h>
 
 #include "misc.h"
+#include "main.h"
 #include "routes.h"
 
 #define FRONTSLASH ('/')
@@ -76,6 +77,7 @@ http_response handle_htdocs(const http_request *request) {
   char *absolute_path = get_realpath(full_url);
 
   if (is_directory(absolute_path)) {
+    mylog("Request is directory");
     if (absolute_path[strlen(absolute_path) - 1] != FRONTSLASH) {
 
       /* Request will server the directory/index.html */
@@ -100,17 +102,20 @@ http_response handle_htdocs(const http_request *request) {
   if (!exists(absolute_path)) {
 
     /* Return a 404 response */
-
+    mylog("Request does not exist");
     return handle_default(request);
   }
 
   /* File exists */
 
   if (!readable(absolute_path)) {
+    mylog("Request is forbidden");
     return handle_request(request, 403);
   }
 
   /* Not a directory and file exists */
+
+  mylog("Valid Request");
 
   char *content_type = get_content_type(absolute_path);
 
@@ -154,6 +159,8 @@ http_response handle_htdocs(const http_request *request) {
   resp->message_body = strdup(data);
   free(data);
   data = NULL;
+
+  mylog("Response generated");
 
   return *resp;
 }
