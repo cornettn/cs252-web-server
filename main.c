@@ -24,6 +24,10 @@ void print_usage(char *name) {
     printf("USAGE: %s [-f|-t|-pNUM_THREADS] [-h] PORT_NO\n", name);
 } /* print_usage() */
 
+void mylog(char *msg) {
+  dprintf(g_debug, "%s\n", msg);
+}
+
 /*
  * Runs the webserver.
  */
@@ -115,6 +119,3 @@ int main(int argc, char **argv) {
 } /* main() */
 
 
-void mylog(char *msg) {
-  dprintf(g_debug, "%s\n", msg);
-}
