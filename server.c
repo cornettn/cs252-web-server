@@ -73,6 +73,21 @@ void run_linear_server(acceptor *acceptor) {
 
 void run_forking_server(acceptor *acceptor) {
   // TODO: Add your code to accept and handle connections in child processes
+  while (1) {
+    socket_t *sock = accept_connection(accpetor);
+    int pid = fork();
+    if (pid == -1) {
+      perror("Forking error in forking_server");
+      exit(-1);
+    }
+    if (pid == 0) {
+
+      /* Child Process */
+      handle(sock);
+      exit(0);
+    }
+  }
+
 } /* run_forking_server() */
 
 /*

@@ -8,8 +8,7 @@
 #include "server.h"
 #include "socket.h"
 
-// TODO: Change me! Choose anything between 1024 and 65535
-#define DEFAULT_PORT (0)
+#define DEFAULT_PORT (3001)
 
 /*
  * Print the usage for the program. Takes the name of the program as an
@@ -29,7 +28,7 @@ int main(int argc, char **argv) {
 
   concurrency_mode mode = E_NO_CONCURRENCY;
 
-  int port_no = 3001;
+  int port_no = 0;
   int num_threads = 0;
 
   int c = 0;
