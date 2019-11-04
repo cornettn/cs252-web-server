@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
 
   concurrency_mode mode = E_NO_CONCURRENCY;
 
-  int port_no = 0;
+  int port_no = 3001;
   int num_threads = 0;
 
   int c = 0;
