@@ -9,6 +9,7 @@
 
 #include "http_messages.h"
 #include "routes.h"
+#include "main.h"
 
 #define BUF_SIZE (1024)
 #define TRUE (1)
@@ -447,7 +448,6 @@ void handle(socket_t *sock) {
   print_request(&request);
 
 
-
   /* Write the response */
 
   http_response *response = (http_response *) malloc(sizeof(http_response));
@@ -456,18 +456,22 @@ void handle(socket_t *sock) {
   response->headers = NULL;
 
   if (value == PARSE_ERROR) {
+    mylog("Parse error");
     http_response resp = handle_request(&request, 400);
     response = &resp;
   }
   else if (!accepted_method(request.method)) {
+    mylog("not accepted method");
     http_response resp = handle_request(&request, 405);
     response = &resp;
   }
   else if (!accepted_http_version(request.http_version)) {
+    mylog("Not accepted http");
     http_response resp = handle_request(&request, 505);
     response = &resp;
   }
   else if(is_authorized(response, &request)) {
+    mylog("Authorized!");
     http_response resp = handle_htdocs(&request);
     response = &resp;
   }
