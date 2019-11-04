@@ -42,6 +42,8 @@ char *return_user_pwd_string(void) {
   char *line = NULL;
   size_t len = 0;
 
+  mylog("Trying to open auth.txt");
+
   fp = fopen("./auth.txt", "r");
 
   mylog("Opened auth.txt");
