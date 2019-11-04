@@ -313,7 +313,7 @@ char *decode(char *str) {
 
 int accepted_http_version(char *version) {
   for (int i = 0; i < SIZEOF(accepted_http_versions); i++) {
-    if (!strcmp(method, accepted_http_versions[i])) {
+    if (!strcmp(version, accepted_http_versions[i])) {
       return 1;
     }
   }
