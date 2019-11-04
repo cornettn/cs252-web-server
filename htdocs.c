@@ -136,6 +136,16 @@ http_response handle_htdocs(const http_request *request) {
   resp->status_code = 200;
   resp->reason_phrase = (char *) status_reason(resp->status_code);
 
+  FILE *fp = fopen(absolute_path, "r");
+  fseek(fp, 0, SEEK_END);
+  int length = ftell(fp);
+  fseek(fp, 0, SEEK_SET);
+  char *data = (char *) malloc(length + 1);
+  fread(data, sizeof(char), length, fp);
+  data = strcat(data, '\0');
+  resp->message_body = strdup(data);
+  free(data);
+  data = NULL;
 
   return *resp;
 }
