@@ -25,6 +25,8 @@ char g_user_pass[MAX_USR_PWD_LEN];
 char *accepted_methods[] = {"GET"};
 int accepted_methods_size = 1;
 
+char *accepted_http_version[] = {"HTTP:1.1"};
+
 /*
  * Return a string in a format <user>:<password>
  * either from auth.txt or from your implememtation.
