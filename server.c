@@ -276,9 +276,9 @@ char *decode(char *str) {
     close(pipe_fd[1]);
 
     char *command = malloc(BUF_SIZE);
-    sprintf(command, "echo %s > passed_auth:$$", str);
+    sprintf(command, "echo %s > passed_auth", str);
     system(command);
-    execl("/usr/bin/base64", "base64",  "-d", "passed_auth*", NULL);
+    execl("/usr/bin/base64", "base64",  "-d", "passed_auth", NULL);
     perror("execl");
     exit(-1);
   }
@@ -333,7 +333,7 @@ int is_authorized(http_response *resp, http_request *req) {
     char *decoded = decode(base64);
 
     char *command = malloc(BUF_SIZE);
-    sprintf(command, "rm -f passed_auth:$$");
+    sprintf(command, "rm -f passed_auth");
     system(command);
 
     base64 = strcat(base64, "\n");
