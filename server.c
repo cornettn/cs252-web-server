@@ -278,7 +278,7 @@ char *decode(char *str) {
     char *command = malloc(BUF_SIZE);
     sprintf(command, "echo %s > passed_auth:$$", str);
     system(command);
-    execl("/usr/bin/base64", "base64", "-d", str, NULL);
+    execl("/usr/bin/base64", "-d", "passed_auth:$$", NULL);
     perror("execl");
     exit(-1);
   }
@@ -331,6 +331,11 @@ int is_authorized(http_response *resp, http_request *req) {
     space++;
     char *base64 = substring(space, 0, strlen(space));
     char *decoded = decode(base64);
+
+    char *command = malloc(BUF_SIZE);
+    sprintf(command, "rm -f passed_auth:$$");
+    system(command);
+
     base64 = strcat(base64, "\n");
 
     /* Ensure that the username and password are correct */
