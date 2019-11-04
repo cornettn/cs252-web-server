@@ -36,6 +36,8 @@ int main(int argc, char **argv) {
 
   g_debug = open("logs", O_CREAT | O_RDWR, 0666);
 
+  mylog("fd is open");
+
   // default to linear
 
   concurrency_mode mode = E_NO_CONCURRENCY;
