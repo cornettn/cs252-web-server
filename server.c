@@ -37,7 +37,7 @@ char *accepted_http_versions[] = {"HTTP/1.1"};
 char *return_user_pwd_string(void) {
   // Read from ./auth.txt. Don't change this. We will use it for testing
   FILE *fp = NULL;
-  char *line = (char *)malloc(sizeof(char) * MAX_USR_PWD_LEN);
+  char *line = NULL;
   size_t len = 0;
 
   fp = fopen("./auth.txt", "r");
@@ -48,12 +48,16 @@ char *return_user_pwd_string(void) {
 
   if (getline(&line, &len, fp) == -1) {
     perror("couldn't read auth.txt");
+    free(line);
+    line = NULL;
     exit(-1);
   }
 
   sprintf(g_user_pass, "%s", line);
 
   free(line);
+  line = NULL;
+  fclose(fp);
 
   return g_user_pass;
 } /* return_user_pwd_string() */
