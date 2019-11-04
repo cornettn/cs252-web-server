@@ -395,15 +395,19 @@ void handle(socket_t *sock) {
   response->num_headers = 0;
   response->headers = NULL;
 
-  if(is_authorized(response, &request)) {
+  if (value == PARSE_ERROR) {
+    http_response resp = handle_request(&request, 400);
+    response = &resp;
+  }
+  else if (!accepted_method(request.method)) {
+    http_response resp = handle_request(&request, 405);
+    response = &resp;
+  }
+  else if(is_authorized(response, &request)) {
     http_response resp = handle_htdocs(&request);
     response = &resp;
   }
 
-  if (!accepted_method(request.method)) {
-    http_response resp = handle_request(&request, 405);
-    response = &resp;
-  }
 
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
