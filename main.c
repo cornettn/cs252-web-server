@@ -13,9 +13,6 @@
 
 #define DEFAULT_PORT (3001)
 
-void mylog(char *msg) {
-  dprintf(g_debug, "%s\n", msg);
-}
 
 /*
  * Print the usage for the program. Takes the name of the program as an
@@ -115,3 +112,8 @@ int main(int argc, char **argv) {
 
   return 0;
 } /* main() */
+
+
+void mylog(char *msg) {
+  dprintf(g_debug, "%s\n", msg);
+}
