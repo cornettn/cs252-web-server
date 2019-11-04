@@ -397,7 +397,7 @@ void handle(socket_t *sock) {
     response = &resp;
   }
 
-  if (!accepted_method(request->method)) {
+  if (!accepted_method(request.method)) {
     http_response resp = handle_request(&request, 405);
     response = &resp;
   }
