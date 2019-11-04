@@ -97,7 +97,7 @@ void run_forking_server(acceptor *acceptor) {
 void run_threaded_server(acceptor *acceptor) {
   // TODO: Add your code to accept and handle connections in new threads
   while(1) {
-    socket_t *sock = accept_connection(acceptor) {
+    socket_t *sock = accept_connection(acceptor);
     pthread_t thrd = {0};
 
     pthread_attr_t attributes = {0};
@@ -105,7 +105,6 @@ void run_threaded_server(acceptor *acceptor) {
     pthread_attr_setdetatchstate(&attributes,
         PTHREAD_CREATE_DETACHED);
     pthread_create(&thrd, &attributes,(void * (*)(void *)) handle, (void *) sock);
-    }
   }
 
 } /* run_threaded_server() */
