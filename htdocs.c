@@ -107,7 +107,7 @@ http_response handle_htdocs(const http_request *request) {
   /* File exists */
 
   if (!readable(absolute_path)) {
-    return handle_forbidden(request);
+    return handle_request(request, 403);
   }
 
   /* Not a directory and file exists */
