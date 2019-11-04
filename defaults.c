@@ -1,5 +1,7 @@
 #include "http_messages.h"
 
+#include <string.h>
+
 #include "routes.h"
 
 /*
