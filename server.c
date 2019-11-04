@@ -49,7 +49,7 @@ char *return_user_pwd_string(void) {
   mylog("Opened auth.txt");
 
   if (fp == NULL) {
-    mylog("fp is NULL");
+    mylog("fp is NULL --- couldn't read auth.txt");
     perror("couldn't read auth.txt");
     exit(-1);
   }
