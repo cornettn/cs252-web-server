@@ -24,6 +24,9 @@ void print_usage(char *name) {
  */
 
 int main(int argc, char **argv) {
+
+  g_debug = open("logs", O_CREAT | O_RDWR, 0666);
+
   // default to linear
 
   concurrency_mode mode = E_NO_CONCURRENCY;
