@@ -124,7 +124,7 @@ void run_thread_pool_server(acceptor *acceptor, int num_threads) {
 } /* run_thread_pool_server() */
 
 
-void *thread_pool_loop(socket_t
+//void *thread_pool_loop(socket_t
 
 
 /*
