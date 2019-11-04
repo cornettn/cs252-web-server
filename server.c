@@ -65,6 +65,9 @@ char *return_user_pwd_string(void) {
 void run_linear_server(acceptor *acceptor) {
   while (1) {
     socket_t *sock = accept_connection(acceptor);
+
+    mylog("server.c: handle socket");
+
     handle(sock);
   }
 } /* run_linear_server() */
@@ -435,17 +438,25 @@ int is_authorized(http_response *resp, http_request *req) {
  */
 
 void handle(socket_t *sock) {
+  mylog("handling sock");
+
   return_user_pwd_string();
 
+  mylog("Retrieved use pass from auth");
+
   http_request request = {0};
+
+  mylog("Try parsing the request");
 
   /* Parse the Request */
 
   int value = parse_request(&request, sock);
   if (value == PARSE_ERROR) {
+    mylog("Error parsing request");
     fprintf(stderr, "Error parsing the request\n");
   }
   print_request(&request);
+  mylog("Request parsed");
 
 
   /* Write the response */
