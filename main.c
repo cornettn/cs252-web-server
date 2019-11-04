@@ -4,11 +4,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <sys/types.h>
+#include <sys.stat.h>
+#include <fcntl.h>
 
 #include "server.h"
 #include "socket.h"
 
 #define DEFAULT_PORT (3001)
+
+void log(char *msg) {
+  dprintf(g_debug, "%s\n", msg);
+}
 
 /*
  * Print the usage for the program. Takes the name of the program as an
