@@ -329,7 +329,7 @@ int is_authorized(http_response *resp, http_request *req) {
     sprintf(command, "rm -f passed_auth");
     system(command);
 
-    base64 = strcat(base64, "\n");
+    decoded = strcat(decoded, "\n");
 
     /* Ensure that the username and password are correct */
 
