@@ -43,11 +43,16 @@ char *return_user_pwd_string(void) {
   size_t len = 0;
 
   fp = fopen("./auth.txt", "r");
+
+  mylog("Opened auth.txt");
+
   if (fp == NULL) {
     mylog("fp is NULL");
     perror("couldn't read auth.txt");
     exit(-1);
   }
+
+  mylog("fp is not NULL");
 
   if (getline(&line, &len, fp) == -1) {
     mylog("getline error");
@@ -57,7 +62,11 @@ char *return_user_pwd_string(void) {
     exit(-1);
   }
 
+  mylog("Read line");
+
   sprintf(g_user_pass, "%s", line);
+
+  mylog("Wrote to global var");
 
   free(line);
   line = NULL;
