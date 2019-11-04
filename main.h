@@ -10,6 +10,6 @@ typedef enum {
 
 extern int g_debug;
 
-void log(char *msg);
+void mylog(char *msg);
 
 #endif // MAIN_H

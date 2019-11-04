@@ -13,7 +13,7 @@
 
 #define DEFAULT_PORT (3001)
 
-void log(char *msg) {
+void mylog(char *msg) {
   dprintf(g_debug, "%s\n", msg);
 }
 
