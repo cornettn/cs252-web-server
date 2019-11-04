@@ -308,7 +308,7 @@ char *decode(char *str) {
 
 
 int accepted_method(char *method) {
-  for (int i = 0; i < strlen(accepted_methods_size); i++) {
+  for (int i = 0; i < accepted_methods_size; i++) {
     if (!strcmp(method, accepted_methods[i])) {
       return 1;
     }
