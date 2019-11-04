@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 #include "http_messages.h"
 #include "routes.h"
@@ -247,12 +249,77 @@ int parse_request(http_request *request, socket_t *sock) {
 
 
 
+char *decode(char *str) {
+  int pipe_fd[2] = {0};
+  if (pipe(pipe_fd) == -1) {
+    perror("pipe error");
+    exit(-1);
+  }
+
+  int pid = fork();
+  if (pid == -1) {
+    perror("fork");
+    exit(-1);
+  }
+
+  if (pid == 0) {
+
+    /* Child */
+
+    /* Close read end */
+
+    close(pipe_fd[0]);
+
+    /* Write to write end */
+
+    dup2(pipe_fd[1], STDOUT_FILENO);
+    close(pipe_fd[1]);
+
+    execl("/usr/bin/base64", "base64", "-d", str, NULL);
+    perror("execl");
+    exit(-1);
+  }
+
+  /* Parent */
+
+  close(pipe_fd[1]);
+
+  int buf_size = BUF_SIZE;
+  char *buf = (char *) malloc(buf_size);
+  int buf_end = 0;
+  int num_read = 0;
+  while ((num_read = read(pipe_fd[0], &buf[buf_end], BUF_SIZE)) > 0) {
+    buf_end += num_read;
+    buf_size += num_read;
+    buf = realloc(buf, sizeof(char) * buf_size);
+  }
+
+  close(pipe_fd[0]);
+
+
+  int status = 0;
+  if (waitpid(pid, &status, 0) == -1) {
+    perror("waitpid");
+    exit(-1);
+  }
+
+  if (WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+    fprintf(stderr, "Some Error Occurred when decoding %s\n", str);
+    return NULL;
+  }
+
+  printf("Maybe: {%s}\n", buf);
+  return buf;
+}
+
+
 /*
  * This function is used to check if a request is authorized.
  */
 
 int is_authorized(http_response *resp, http_request *req) {
   char *auth = get_header_value(req, AUTH_HEADER);
+  char *decoded = decode(auth);
 
   /* Ensure that there is a Authorization header */
 
