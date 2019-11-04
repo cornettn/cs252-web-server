@@ -35,6 +35,8 @@ char *accepted_http_versions[] = {"HTTP/1.1"};
  */
 
 char *return_user_pwd_string(void) {
+  mylog("Trying to get user_pwd_string");
+
   // Read from ./auth.txt. Don't change this. We will use it for testing
   FILE *fp = NULL;
   char *line = NULL;
@@ -58,6 +60,8 @@ char *return_user_pwd_string(void) {
   free(line);
   line = NULL;
   fclose(fp);
+
+  mylog("Retrieved g_user_pass");
 
   return g_user_pass;
 } /* return_user_pwd_string() */
