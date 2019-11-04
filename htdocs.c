@@ -142,7 +142,7 @@ http_response handle_htdocs(const http_request *request) {
   fseek(fp, 0, SEEK_SET);
   char *data = (char *) malloc(length + 1);
   fread(data, sizeof(char), length, fp);
-  data = strcat(data, '\0');
+  data[length] = '\0';
   resp->message_body = strdup(data);
   free(data);
   data = NULL;
