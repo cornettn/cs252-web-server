@@ -323,7 +323,6 @@ char *decode(char *str) {
 
 int is_authorized(http_response *resp, http_request *req) {
   char *auth = get_header_value(req, AUTH_HEADER);
-  char *decoded = decode(auth);
 
   /* Ensure that there is a Authorization header */
 
@@ -331,6 +330,7 @@ int is_authorized(http_response *resp, http_request *req) {
     char *space = strchr(auth, ' ');
     space++;
     char *base64 = substring(space, 0, strlen(space));
+    char *decoded = decode(base64);
     base64 = strcat(base64, "\n");
 
     /* Ensure that the username and password are correct */
