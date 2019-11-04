@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <pthread.h>
 
 #include "http_messages.h"
 #include "routes.h"
