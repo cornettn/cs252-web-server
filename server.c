@@ -17,15 +17,15 @@
 #define CRLF ("\r\n")
 #define AUTH_HEADER ("Authorization")
 
+#define SIZEOF(x) (sizeof(x) / sizeof(char *))
+
 int parse_request(http_request *, socket_t *);
 char *substring(char *, int, int);
 
 char g_user_pass[MAX_USR_PWD_LEN];
 
 char *accepted_methods[] = {"GET"};
-int accepted_methods_size = 1;
-
-char *accepted_http_version[] = {"HTTP:1.1"};
+char *accepted_http_versions[] = {"HTTP/1.1"};
 
 /*
  * Return a string in a format <user>:<password>
@@ -311,9 +311,18 @@ char *decode(char *str) {
   return buf;
 }
 
+int accepted_http_version(char *version) {
+  for (int i = 0; i < SIZEOF(accepted_http_versions); i++) {
+    if (!strcmp(method, accepted_http_versions[i])) {
+      return 1;
+    }
+  }
+  return 0;
+}
+
 
 int accepted_method(char *method) {
-  for (int i = 0; i < accepted_methods_size; i++) {
+  for (int i = 0; i < SIZEOF(accepted_methods); i++) {
     if (!strcmp(method, accepted_methods[i])) {
       return 1;
     }
@@ -403,6 +412,10 @@ void handle(socket_t *sock) {
   }
   else if (!accepted_method(request.method)) {
     http_response resp = handle_request(&request, 405);
+    response = &resp;
+  }
+  else if (!accepted_http_version(request.http_version)) {
+    http_response resp = handle_request(&request, 505);
     response = &resp;
   }
   else if(is_authorized(response, &request)) {
