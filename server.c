@@ -278,7 +278,7 @@ char *decode(char *str) {
     char *command = malloc(BUF_SIZE);
     sprintf(command, "echo %s > passed_auth:$$", str);
     system(command);
-    execl("/usr/bin/base64", "base64",  "-d", "passed_auth:$$", NULL);
+    execl("/usr/bin/base64", "base64",  "-d", "passed_auth*", NULL);
     perror("execl");
     exit(-1);
   }
