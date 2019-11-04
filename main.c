@@ -94,6 +94,8 @@ int main(int argc, char **argv) {
 
   printf("%d %d %d\n", mode, port_no, num_threads);
 
+  mylog("main.c: Create socket acceptor");
+
   acceptor *acceptor = create_socket_acceptor(port_no);
 
   if (acceptor == NULL) {
@@ -102,18 +104,24 @@ int main(int argc, char **argv) {
 
   switch (mode) {
   case E_FORK_PER_REQUEST:
+    mylog("main.c: run forking sever");
     run_forking_server(acceptor);
     break;
   case E_THREAD_PER_REQUEST:
+    mylog("main.c: run threaded sever");
     run_threaded_server(acceptor);
     break;
   case E_THREAD_POOL:
+    mylog("main.c: run pooled sever");
     run_thread_pool_server(acceptor, num_threads);
     break;
   default:
+    mylog("main.c: run linear sever");
     run_linear_server(acceptor);
     break;
   }
+
+  mylog("Close main socket acceptor");
 
   close_socket_acceptor(acceptor);
 
