@@ -274,15 +274,11 @@ int is_authorized(http_response *resp, http_request *req) {
 
   header *head = (header *) malloc(sizeof(header));
   head->key = strdup("WWW-Authenticate");
-  head->value = strdup("Basic realm=\"hardcode\"");
+  head->value = strdup("Basic realm=\"noah-cornett-realm\"");
   add_header_to_response(resp, head);
   resp->status_code = 401;
   resp->reason_phrase = strdup(status_reason(resp->status_code));
-  //return FALSE;
-
-  // TODO Change back to FALSE after testing
-
-  return TRUE;
+  return FALSE;
 } /* is_authorized() */
 
 /*
@@ -313,7 +309,6 @@ void handle(socket_t *sock) {
     http_response resp = handle_htdocs(&request);
     response = &resp;
   }
-
 
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
