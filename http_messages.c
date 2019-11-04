@@ -161,7 +161,7 @@ char *response_string(http_response *resp) {
     "Hello CS252!\r\n";
 */
 
-  char *data = "Hello CS252!\r\n";
+  char *data = resp->message_body;
 
   str = append(str, data);
 
