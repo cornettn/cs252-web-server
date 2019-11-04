@@ -301,18 +301,11 @@ char *decode(char *str) {
   printf("Maybe: {%s}\n", buf);
 
 
-  int status = 0;
-  if (waitpid(pid, &status, 0) == -1) {
+  if (waitpid(pid, NULL, 0) == -1) {
     perror("waitpid");
     exit(-1);
   }
 
-  if (WIFEXITED(status) || WEXITSTATUS(status) != 0) {
-    fprintf(stderr, "Some Error Occurred when decoding %s\n", str);
-    return NULL;
-  }
-
-  printf("Maybe: {%s}\n", buf);
   return buf;
 }
 
@@ -342,6 +335,7 @@ int is_authorized(http_response *resp, http_request *req) {
 
     if (!strcmp(decoded, g_user_pass)) {
       /* Authorized */
+      printf("wtf\n");
       return TRUE;
     }
   }
