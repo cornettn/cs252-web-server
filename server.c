@@ -90,7 +90,6 @@ void run_thread_pool_server(acceptor *acceptor, int num_threads) {
 
 
 
-
 /*
  * This fuction is used to parse an individual header.
  */
@@ -305,6 +304,16 @@ char *decode(char *str) {
   }
 
   return buf;
+}
+
+
+int accepted_method(char *method) {
+  for (int i = 0; i < strlen(accepted_methods_size); i++) {
+    if (!strcmp(method, accepted_methods[i])) {
+      return 1;
+    }
+  }
+  return 0;
 }
 
 

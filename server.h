@@ -19,4 +19,7 @@ void handle(socket_t *sock);
 // Global variable for user and password
 extern char g_user_pass[MAX_USR_PWD_LEN];
 
+char **accepted_methods = {"GET"};
+int accepted_methods_size = 1;
+
 #endif // SERVER_H
