@@ -298,8 +298,6 @@ char *decode(char *str) {
   }
 
   close(pipe_fd[0]);
-  printf("Maybe: {%s}\n", buf);
-
 
   if (waitpid(pid, NULL, 0) == -1) {
     perror("waitpid");
@@ -324,17 +322,25 @@ int is_authorized(http_response *resp, http_request *req) {
     space++;
     char *base64 = substring(space, 0, strlen(space));
     char *decoded = decode(base64);
+    free(base64);
+    base64 = NULL;
 
     char *command = malloc(BUF_SIZE);
     sprintf(command, "rm -f passed_auth");
     system(command);
+    free(command);
+    command = NULL;
 
     decoded = strcat(decoded, "\n");
 
     /* Ensure that the username and password are correct */
 
     if (!strcmp(decoded, g_user_pass)) {
+
       /* Authorized */
+
+      free(decoded);
+      decoded = NULL;
       return TRUE;
     }
   }
