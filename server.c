@@ -35,18 +35,18 @@ char *accepted_http_versions[] = {"HTTP/1.1"};
  */
 
 char *return_user_pwd_string(void) {
-  mylog("Trying to get user_pwd_string");
+  //mylog("Trying to get user_pwd_string");
 
   // Read from ./auth.txt. Don't change this. We will use it for testing
   FILE *fp = NULL;
   char *line = NULL;
   size_t len = 0;
 
-  mylog("Trying to open auth.txt");
+  //mylog("Trying to open auth.txt");
 
   fp = fopen("./auth.txt", "r");
 
-  mylog("Opened auth.txt");
+  //mylog("Opened auth.txt");
 
   if (fp == NULL) {
     mylog("fp is NULL --- couldn't read auth.txt");
@@ -54,7 +54,7 @@ char *return_user_pwd_string(void) {
     exit(-1);
   }
 
-  mylog("fp is not NULL");
+  //mylog("fp is not NULL");
 
   if (getline(&line, &len, fp) == -1) {
     mylog("getline error");
@@ -64,11 +64,11 @@ char *return_user_pwd_string(void) {
     exit(-1);
   }
 
-  mylog("Read line");
+  //mylog("Read line");
 
   sprintf(g_user_pass, "%s", line);
 
-  mylog("Wrote to global var");
+  //mylog("Wrote to global var");
 
   free(line);
   line = NULL;
