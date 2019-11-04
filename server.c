@@ -295,6 +295,7 @@ char *decode(char *str) {
   }
 
   close(pipe_fd[0]);
+  printf("Maybe: {%s}\n", buf);
 
 
   int status = 0;
