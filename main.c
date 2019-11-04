@@ -13,6 +13,7 @@
 
 #define DEFAULT_PORT (3001)
 
+int g_debug = 0;
 
 /*
  * Print the usage for the program. Takes the name of the program as an

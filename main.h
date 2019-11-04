@@ -8,8 +8,6 @@ typedef enum {
   E_THREAD_POOL = 'p'
 } concurrency_mode;
 
-extern int g_debug;
-
 void mylog(char *msg);
 
 #endif // MAIN_H
