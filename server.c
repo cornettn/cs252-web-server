@@ -104,7 +104,7 @@ void run_threaded_server(acceptor *acceptor) {
     pthread_attr_init(&attributes);
     pthread_attr_setdetatchstate(&attributes,
         PTHREAD_CREATE_DETACHED);
-    pthread_create(&thrd, &attributes,(void * (*)) handle, (void *) sock);
+    pthread_create(&thrd, &attributes,(void * (*)(void *)) handle, (void *) sock);
     }
   }
 
