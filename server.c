@@ -331,7 +331,7 @@ int is_authorized(http_response *resp, http_request *req) {
 
     /* Ensure that the username and password are correct */
 
-    if (!strcmp(base64, g_user_pass)) {
+    if (!strcmp(decoded, g_user_pass)) {
       /* Authorized */
       return TRUE;
     }
