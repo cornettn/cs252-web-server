@@ -46,6 +46,10 @@ int exists(char *full_path) {
   return (access(full_path, F_OK) == 0);
 }
 
+int readable(char *full_path) {
+  return (access(full_path, R_OK) == 0);
+}
+
 /*
  * You should implement this function and use it in server.c
  */
@@ -93,7 +97,7 @@ http_response handle_htdocs(const http_request *request) {
     }
   }
 
-  if (!exists(full_url)) {
+  if (!exists(absolute_path)) {
 
     /* Return a 404 response */
 
@@ -101,6 +105,10 @@ http_response handle_htdocs(const http_request *request) {
   }
 
   /* File exists */
+
+  if (!readable(absolute_path)) {
+    return handle_forbidden(request);
+  }
 
   /* Not a directory and file exists */
 
