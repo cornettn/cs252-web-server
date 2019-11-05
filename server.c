@@ -263,6 +263,8 @@ int parse_request(http_request *request, socket_t *sock) {
   /* Read the contents of sock into BUF.
    * Try reading BUF_SIZE characters */
 
+  mylog("Read the sock");
+
   int check = socket_read(sock, buf, BUF_SIZE);
   if (check == -1) {
 
@@ -453,7 +455,6 @@ void handle(socket_t *sock) {
 
   /* Parse the Request */
 
-  print_request(&request);
   int value = parse_request(&request, sock);
   if (value == PARSE_ERROR) {
     mylog("Error parsing request");
