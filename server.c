@@ -27,7 +27,7 @@ char *substring(char *, int, int);
 char g_user_pass[MAX_USR_PWD_LEN];
 
 char *accepted_methods[] = {"GET"};
-char *accepted_http_versions[] = {"HTTP/1.1"};
+char *accepted_http_versions[] = {"HTTP/1.1", "HTTP/1.0"};
 
 /*
  * Return a string in a format <user>:<password>
