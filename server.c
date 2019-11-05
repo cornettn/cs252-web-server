@@ -327,6 +327,9 @@ int parse_request(http_request *request, socket_t *sock) {
 
 
 char *decode(char *str) {
+
+  printf("decode: {%s}\n", str);
+
   FILE *fp = NULL;
   char *command = (char *) malloc(BUF_SIZE);
   char *buf = (char *) malloc(BUF_SIZE);
