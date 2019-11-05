@@ -339,9 +339,8 @@ char *decode(char *str) {
 
   fp = popen("/usr/bin/base64 -d test_auth", "r");
 
-  while(fgets(buf, sizeof(buf), fp) > 0) {
+  while(fgets(buf, sizeof(buf), fp) != NULL) {
   printf("HSHSHS: {%s}", buf);
-  }
   return buf;
 }
 
