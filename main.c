@@ -35,7 +35,7 @@ void sig_child_handler(int sig, siginfo_t *info, void *context) {
   UNUSED(sig);
   UNUSED(context);
 
-//  waitpid(info->si_pid, 0, WNOHANG);
+  waitpid(info->si_pid, 0, WNOHANG);
 }
 
 
