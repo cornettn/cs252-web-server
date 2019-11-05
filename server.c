@@ -343,10 +343,12 @@ char *decode(char *str) {
 
   while(fgets(buf, sizeof(buf), fp) != NULL) {
     decoded = strcat(decoded, buf);
-    printf("HSHSHS: {%s}", buf);
-    printf("HSHSHSHS: {%s}", decoded);
   }
-  return buf;
+  free(buf);
+  buf = NULL;
+  fclose(fp);
+  fp = NULL;
+  return decoded;
 }
 
 char *old_decode(char *str) {
