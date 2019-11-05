@@ -341,6 +341,7 @@ char *decode(char *str) {
 
   while(fgets(buf, sizeof(buf), fp) != NULL) {
   printf("HSHSHS: {%s}", buf);
+  }
   return buf;
 }
 
