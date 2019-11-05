@@ -28,11 +28,28 @@ void mylog(char *msg) {
   dprintf(g_debug, "%s\n", msg);
 }
 
+void sig_child_handler(int sig) {
+  while (waitpid((pid_t) -1, 0, WNOHANG) > 0) {}
+}
+
+
 /*
  * Runs the webserver.
  */
 
 int main(int argc, char **argv) {
+
+  struct sigaction sig_act = {0};
+  sig_act.sa_handler = sig_child_handler;
+  sigemptyset(&sig_act.sa_mask);
+  sig_act.sa_flags = SA_NOCLDWAIT | SA_RESTART;
+  int err = sigaction(SIGCHLD, &sig_act, NULL);
+
+  if (err) {
+    perror("sigaction");
+    exit(-1);
+  }
+
 
   g_debug = open("logs", O_CREAT | O_RDWR, 0666);
 
