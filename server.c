@@ -35,26 +35,20 @@ char *accepted_http_versions[] = {"HTTP/1.1"};
  */
 
 char *return_user_pwd_string(void) {
-  //mylog("Trying to get user_pwd_string");
 
   // Read from ./auth.txt. Don't change this. We will use it for testing
+
   FILE *fp = NULL;
   char *line = NULL;
   size_t len = 0;
 
-  //mylog("Trying to open auth.txt");
-
   fp = fopen("./auth.txt", "r");
-
-  //mylog("Opened auth.txt");
 
   if (fp == NULL) {
     mylog("fp is NULL --- couldn't read auth.txt");
     perror("couldn't read auth.txt");
     exit(-1);
   }
-
-  //mylog("fp is not NULL");
 
   if (getline(&line, &len, fp) == -1) {
     mylog("getline error");
@@ -64,11 +58,7 @@ char *return_user_pwd_string(void) {
     exit(-1);
   }
 
-  //mylog("Read line");
-
   sprintf(g_user_pass, "%s", line);
-
-  //mylog("Wrote to global var");
 
   free(line);
   line = NULL;
@@ -100,7 +90,6 @@ void run_linear_server(acceptor *acceptor) {
 void run_forking_server(acceptor *acceptor) {
   // TODO: Add your code to accept and handle connections in child processes
   while (1) {
-    socket_t *sock = accept_connection(acceptor);
     int pid = fork();
     if (pid == -1) {
       perror("Forking error in forking_server");
@@ -109,11 +98,16 @@ void run_forking_server(acceptor *acceptor) {
     if (pid == 0) {
 
       /* Child Process */
+
+      mylog("fork: start handling");
+      socket_t *sock = accept_connection(acceptor);
       handle(sock);
+      mylog("fork: End handling");
       exit(0);
     }
 
-    //waitpid(pid, NULL, 0);
+    /* Parent should keep looping */
+
   }
 
 } /* run_forking_server() */
