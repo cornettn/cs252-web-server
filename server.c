@@ -334,7 +334,7 @@ char *decode(char *str) {
   sprintf(command, "echo \"%s\" > test_auth", str);
   system(command);
 
-  fp = popen("/usr/bin/base64", "-d", "test_auth");
+  fp = popen("/usr/bin/base64 -d test_auth", "r");
 
   fgets(buf, sizeof(buf), fp)
   printf("HSHSHS: {%s}", buf);
