@@ -416,6 +416,9 @@ int accepted_method(char *method) {
  */
 
 int is_authorized(http_response *resp, http_request *req) {
+
+  mylog("Check authorization");
+
   char *auth = get_header_value(req, AUTH_HEADER);
 
   /* Ensure that there is a Authorization header */
@@ -441,7 +444,7 @@ int is_authorized(http_response *resp, http_request *req) {
     if (!strcmp(decoded, g_user_pass)) {
 
       /* Authorized */
-
+      mylog("authorized");
       free(decoded);
       decoded = NULL;
       return TRUE;
@@ -449,6 +452,8 @@ int is_authorized(http_response *resp, http_request *req) {
   }
 
   /* Not Authorized */
+
+  mylog("Not Authorized");
 
   header *head = (header *) malloc(sizeof(header));
   head->key = strdup("WWW-Authenticate");
