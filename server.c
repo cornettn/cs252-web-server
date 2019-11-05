@@ -487,6 +487,8 @@ void handle(socket_t *sock) {
   response->num_headers = 0;
   response->headers = NULL;
 
+  mylog("Starting Various Checks");
+
   if (value == PARSE_ERROR) {
     mylog("Parse error");
     http_response resp = handle_request(&request, 400);
