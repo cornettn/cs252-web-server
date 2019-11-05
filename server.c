@@ -113,7 +113,7 @@ void run_forking_server(acceptor *acceptor) {
       exit(0);
     }
 
-    waitpid(pid, NULL, 0);
+    //waitpid(pid, NULL, 0);
   }
 
 } /* run_forking_server() */
