@@ -14,6 +14,7 @@
 #include "socket.h"
 
 #define DEFAULT_PORT (3001)
+#define UNUSED(x) (void)(x)
 
 int g_debug = 0;
 
@@ -30,8 +31,11 @@ void mylog(char *msg) {
   dprintf(g_debug, "%s\n", msg);
 }
 
-void sig_child_handler(int sig) {
-  while (waitpid((pid_t) -1, 0, WNOHANG) > 0) {}
+void sig_child_handler(int sig, siginfo_t *info, void *context) {
+  UNUSED(sig);
+  UNUSED(context);
+
+  waitpid(info->si_pid, 0, WNOHANG);
 }
 
 
@@ -42,9 +46,9 @@ void sig_child_handler(int sig) {
 int main(int argc, char **argv) {
 
   struct sigaction sig_act = {0};
-  sig_act.sa_handler = sig_child_handler;
+  sig_act.sa_sigaction = sig_child_handler;
   sigemptyset(&sig_act.sa_mask);
-  sig_act.sa_flags = SA_NOCLDWAIT | SA_RESTART;
+  sig_act.sa_flags = SA_NOCLDSTOP | SA_RESTART | SA_SIGINFO;
   int err = sigaction(SIGCHLD, &sig_act, NULL);
 
   if (err) {
