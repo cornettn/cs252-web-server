@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
   struct sigaction sig_act = {0};
   sig_act.sa_sigaction = sig_child_handler;
   sigemptyset(&sig_act.sa_mask);
-  sig_act.sa_flags = SA_NOCLDWAIT | SA_RESTART | SA_SIGINFO;
+  sig_act.sa_flags = SA_NOCLDSTOP | SA_RESTART | SA_SIGINFO;
   int err = sigaction(SIGCHLD, &sig_act, NULL);
 
   if (err) {
