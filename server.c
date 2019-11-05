@@ -351,64 +351,6 @@ char *decode(char *str) {
   return decoded;
 }
 
-char *old_decode(char *str) {
-  int pipe_fd[2] = {0};
-  if (pipe(pipe_fd) == -1) {
-    perror("pipe error");
-    exit(-1);
-  }
-
-  int pid = fork();
-  if (pid == -1) {
-    perror("fork");
-    exit(-1);
-  }
-
-  if (pid == 0) {
-
-    /* Child */
-
-    /* Close read end */
-
-    close(pipe_fd[0]);
-
-    /* Write to write end */
-
-    dup2(pipe_fd[1], STDOUT_FILENO);
-    close(pipe_fd[1]);
-
-    char *command = malloc(BUF_SIZE);
-    sprintf(command, "echo %s > passed_auth", str);
-    system(command);
-    execl("/usr/bin/base64", "base64",  "-d", "passed_auth", NULL);
-    perror("execl");
-    exit(-1);
-  }
-
-  /* Parent */
-
-  if (waitpid(pid, NULL, 0) == -1) {
-    perror("waitpid");
-    exit(-1);
-  }
-
-  close(pipe_fd[1]);
-
-  int buf_size = BUF_SIZE;
-  char *buf = (char *) malloc(buf_size);
-  int buf_end = 0;
-  int num_read = 0;
-  while ((num_read = read(pipe_fd[0], &buf[buf_end], BUF_SIZE)) > 0) {
-    buf_end += num_read;
-    buf_size += num_read;
-    buf = realloc(buf, sizeof(char) * buf_size);
-  }
-
-  close(pipe_fd[0]);
-
-
-  return buf;
-}
 
 int accepted_http_version(char *version) {
   mylog("Check to see if valid http version");
