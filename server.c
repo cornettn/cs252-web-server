@@ -363,6 +363,11 @@ char *decode(char *str) {
 
   /* Parent */
 
+  if (waitpid(pid, NULL, 0) == -1) {
+    perror("waitpid");
+    exit(-1);
+  }
+
   close(pipe_fd[1]);
 
   int buf_size = BUF_SIZE;
@@ -377,10 +382,6 @@ char *decode(char *str) {
 
   close(pipe_fd[0]);
 
-  if (waitpid(pid, NULL, 0) == -1) {
-    perror("waitpid");
-    exit(-1);
-  }
 
   return buf;
 }
