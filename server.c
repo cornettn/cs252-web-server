@@ -326,8 +326,22 @@ int parse_request(http_request *request, socket_t *sock) {
 } /* parse_request() */
 
 
-
 char *decode(char *str) {
+  FILE *fp = NULL;
+  char *command = (char *) malloc(BUF_SIZE);
+  char *buf = (char *) malloc(BUF_SIZE);
+
+  sprintf(command, "echo \"%s\" > test_auth", str);
+  system(command);
+
+  fp = popen("/usr/bin/base64", "-d", "test_auth");
+
+  fgets(buf, sizeof(buf), fp)
+  printf("HSHSHS: {%s}", buf);
+  return buf;
+}
+
+char *old_decode(char *str) {
   int pipe_fd[2] = {0};
   if (pipe(pipe_fd) == -1) {
     perror("pipe error");
