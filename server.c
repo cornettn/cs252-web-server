@@ -386,21 +386,27 @@ char *decode(char *str) {
 }
 
 int accepted_http_version(char *version) {
+  mylog("Check to see if valid http version");
   for (int i = 0; i < SIZEOF(accepted_http_versions); i++) {
     if (!strcmp(version, accepted_http_versions[i])) {
+      mylog("Valid http version");
       return 1;
     }
   }
+  mylog("Not valid http version");
   return 0;
 }
 
 
 int accepted_method(char *method) {
+  mylog("Check to see if accepted method");
   for (int i = 0; i < SIZEOF(accepted_methods); i++) {
     if (!strcmp(method, accepted_methods[i])) {
+      mylog("Accepted method");
       return 1;
     }
   }
+  mylog("Not accepted method");
   return 0;
 }
 
