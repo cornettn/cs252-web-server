@@ -453,6 +453,7 @@ void handle(socket_t *sock) {
 
   /* Parse the Request */
 
+  print_request(&request);
   int value = parse_request(&request, sock);
   if (value == PARSE_ERROR) {
     mylog("Error parsing request");
