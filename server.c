@@ -427,10 +427,12 @@ int is_authorized(http_response *resp, http_request *req) {
     char *space = strchr(auth, ' ');
     space++;
     char *base64 = substring(space, 0, strlen(space));
+    mylog("Decode Auth header");
     char *decoded = decode(base64);
     free(base64);
     base64 = NULL;
 
+    mylog("decode clean up");
     char *command = malloc(BUF_SIZE);
     sprintf(command, "rm -f passed_auth");
     system(command);
@@ -440,6 +442,8 @@ int is_authorized(http_response *resp, http_request *req) {
     decoded = strcat(decoded, "\n");
 
     /* Ensure that the username and password are correct */
+
+    mylog("Check Auth");
 
     if (!strcmp(decoded, g_user_pass)) {
 
