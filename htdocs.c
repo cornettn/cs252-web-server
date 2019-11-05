@@ -134,7 +134,7 @@ http_response handle_htdocs(const http_request *request) {
 
   header *connection_head = (header *) malloc(sizeof(header));
   connection_head->key = "Connection";
-  connection_head->value = "Close";
+  connection_head->value = "close";
   add_header_to_response(resp, connection_head);
 
   header *size = (header *) malloc(sizeof(header));
