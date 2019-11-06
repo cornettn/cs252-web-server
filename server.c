@@ -101,13 +101,9 @@ void run_forking_server(acceptor *acceptor) {
 
       /* Child Process */
 
-      /*
       mylog("fork: start handling");
       handle(sock);
       mylog("fork: End handling");
-      */
-
-      run_linear_server(acceptor);
 
       exit(0);
     }
