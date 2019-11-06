@@ -90,8 +90,8 @@ void run_linear_server(acceptor *acceptor) {
 void run_forking_server(acceptor *acceptor) {
   // TODO: Add your code to accept and handle connections in child processes
   while (1) {
-    socket_t *sock = accept_connection(acceptor);
-    mylog("Connection accepted");
+    //socket_t *sock = accept_connection(acceptor);
+    //mylog("Connection accepted");
     int pid = fork();
     if (pid == -1) {
       perror("Forking error in forking_server");
