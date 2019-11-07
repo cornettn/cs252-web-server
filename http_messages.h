@@ -33,6 +33,7 @@ typedef struct {
 void print_request(http_request *request);
 void add_header_to_response(http_response *response, header *head);
 char *get_header_value(http_request *request, char *key);
+char *get_header_value_response(http_request *response, char *key);
 char *substring(char *buf, int start, int end);
 char *response_string(http_response *response);
 
