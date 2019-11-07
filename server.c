@@ -110,6 +110,8 @@ void run_forking_server(acceptor *acceptor) {
 
     /* Parent should keep looping */
 
+    close_socket(sock);
+
   }
 
 } /* run_forking_server() */
@@ -160,6 +162,8 @@ void run_thread_pool_server(acceptor *acceptor, int num_threads) {
         (void *(*)(void *)) thread_pool_loop,
         (void *) acceptor);
   }
+
+  thread_pool_loop(acceptor);
 
 } /* run_thread_pool_server() */
 
