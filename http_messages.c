@@ -115,8 +115,8 @@ char *get_header_value(const http_request *request, char *key) {
  * This function is used to append a string to another
  */
 
-char *append(char *str, char *appen) {
-  str = realloc(str, strlen(str) + strlen(appen));
+char *append(char *str, char *appen, int len1, int len2) {
+  str = realloc(str, len1 + len2);
   strcat(str, appen);
   return str;
 } /* append() */
@@ -126,13 +126,13 @@ char *append(char *str, char *appen) {
 char *append_headers(char *str, http_response *resp) {
   header *headers = resp->headers;
   for (int i = 0; i < resp->num_headers; i++) {
-    str = append(str, headers[i].key);
-    str = append(str, ":");
-    str = append(str, SPACE);
-    str = append(str, headers[i].value);
-    str = append(str, CRLF);
+    str = append(str, headers[i].key, strlen(str), strlen(headers[i].key));
+    str = append(str, ":", strlen(str), 1);
+    str = append(str, SPACE, strlen(str), strlen(SPACE));
+    str = append(str, headers[i].value, strlen(str), strlen(headers[i].value));
+    str = append(str, CRLF, strlen(str), strlen(CRLF));
   }
-  str = append(str, CRLF);
+  str = append(str, CRLF, strlen(str), strlen(CRLF));
   return str;
 }
 
@@ -148,11 +148,12 @@ char *response_string(http_response *resp) {
 
   char *str = malloc(100);
   sprintf(str, " %d", resp->status_code);
-  str = append(str, SPACE);
-  str = append(str, resp->reason_phrase);
-  str = append(str, CRLF);
+  str = append(str, SPACE, strlen(str), strlen(SPACE));
+  str = append(str, resp->reason_phrase, strlen(str),
+      strlen(resp->reason_phrase));
+  str = append(str, CRLF, strlen(str), strlen(CRLF));
 
-  str = append_headers(str, resp);
+  str = append_headers(str, resp, strlen(str), strlen(resp));
 
   /*
   char *incorrect = "Connection: close\r\n"
@@ -163,11 +164,17 @@ char *response_string(http_response *resp) {
 
   char *data = resp->message_body;
 
-  str = append(str, data);
+  int other_len = strlen(str);
+  int data_len = get_header_value_response(resp, "Content-Length");
 
-  char *to_string = malloc(sizeof(char) * (strlen(str) +
+  str = append(str, data, other_len, data_len);
+
+
+  char *to_string = malloc(sizeof(char) * (other_len +
+                                           data_len +
                                            strlen(resp->http_version) +
                                            1));
+
   strcpy(to_string, resp->http_version);
   strcat(to_string, str);
 
@@ -190,6 +197,16 @@ char *get_header_value(http_request *request, char *key) {
   return NULL;
 } /* get_header_value() */
 
+
+char *get_header_value_response(http_response *resp, char *key) {
+  for (int i = 0; i < resp->num_headers; i++) {
+    if (!strcmp(resp->headers[i].key, key)) {
+      return resp->headers[i].value;
+    }
+  }
+  return NULL;
+
+}
 
 /*
  * This function is used to add a header to a response.
