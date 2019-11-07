@@ -147,8 +147,7 @@ int get_response_length(http_response *resp) {
   char *data = NULL;
   if (resp->message_body != NULL) {
     data = strdup(resp->message_body);
-    free(resp->message_body);
-    resp->message_body = NULL;
+    resp->message_body = "\0";
   }
 
   char *str = response_string(resp);
