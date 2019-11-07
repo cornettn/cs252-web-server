@@ -144,15 +144,20 @@ int get_response_length(http_response *resp) {
     data_len = atoi(cont_len);
   }
 
-  char *data = strdup(resp->message_body);
-  free(resp->message_body);
-  resp->message_body = NULL;
+  char *data = NULL;
+  if (resp->message_body != NULL) {
+    data = strdup(resp->message_body);
+    free(resp->message_body);
+    resp->message_body = NULL;
+  }
 
   char *str = response_string(resp);
 
-  resp->message_body = strdup(data);
-  free(data);
-  data = NULL;
+  if (data != NULL) {
+    resp->message_body = strdup(data);
+    free(data);
+    data = NULL;
+  }
 
   return data_len + strlen(str);
 }
