@@ -199,15 +199,13 @@ char *response_string(http_response *resp) {
     str = append(str, data, other_len, data_len);
   }
 
-  char *to_string = malloc(sizeof(char) * (other_len +
-                                           data_len +
-                                           strlen(resp->http_version) +
-                                           1));
+  int total_size = other_len + data_len + strlen(resp->http_version) + 1;
+  char *to_string = malloc(total_size);
 
   strcpy(to_string, resp->http_version);
   strcat(to_string, str);
+  to_string[total_size] = '\0';
 
-  printf("{%s}\n", to_string);
 
   return to_string;
 } /* response_string() */
