@@ -506,8 +506,6 @@ void handle(socket_t *sock) {
 
 //  int len = get_response_length(response);
 
-  printf("poop\n%d\npoop\n", len);
-
   socket_write_string(sock, to_string);
 //  socket_write(sock, to_string, len);
 
