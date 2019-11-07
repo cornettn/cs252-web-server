@@ -28,7 +28,8 @@ void print_usage(char *name) {
 } /* print_usage() */
 
 void mylog(char *msg) {
-  dprintf(g_debug, "%s\n", msg);
+  return;
+  // dprintf(g_debug, "%s\n", msg);
 }
 
 void sig_child_handler(int sig, siginfo_t *info, void *context) {
