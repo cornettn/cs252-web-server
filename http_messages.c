@@ -153,7 +153,7 @@ char *response_string(http_response *resp) {
       strlen(resp->reason_phrase));
   str = append(str, CRLF, strlen(str), strlen(CRLF));
 
-  str = append_headers(str, resp, strlen(str), strlen(resp));
+  str = append_headers(str, resp);
 
   /*
   char *incorrect = "Connection: close\r\n"
