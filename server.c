@@ -504,9 +504,11 @@ void handle(socket_t *sock) {
 
   mylog("string generated");
 
-  int len = get_reponse_length(response);
+  int len = get_response_length(response);
 
-  socket_write(sock, to_string, len);
+  printf("poop\n%d\npoop\n", len);
+
+  socket_write_string(sock, to_string);
 
   mylog("Wrote string to socket");
 
