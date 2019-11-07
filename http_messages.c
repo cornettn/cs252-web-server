@@ -182,8 +182,9 @@ char *response_string(http_response *resp) {
   int other_len = strlen(str);
   int data_len = atoi(get_header_value_response(resp, "Content-Length"));
 
-  str = append(str, data, other_len, data_len);
-
+  if (data != NULL) {
+    str = append(str, data, other_len, data_len);
+  }
 
   char *to_string = malloc(sizeof(char) * (other_len +
                                            data_len +
