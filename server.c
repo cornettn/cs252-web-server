@@ -508,7 +508,7 @@ void handle(socket_t *sock) {
 
   printf("poop\n%d\npoop\n", len);
 
-  socket_write_string(to_string);
+  socket_write_string(sock, to_string);
 //  socket_write(sock, to_string, len);
 
   mylog("Wrote string to socket");
