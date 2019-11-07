@@ -183,7 +183,7 @@ char *response_string(http_response *resp) {
   char *cont_len = get_header_value_response(resp, "Content-Length");
   int data_len = 0;
   if (cont_len != NULL) {
-    data_len = atoi();
+    data_len = atoi(cont_len);
   }
 
   if (data != NULL) {
