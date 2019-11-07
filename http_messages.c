@@ -180,7 +180,11 @@ char *response_string(http_response *resp) {
   char *data = resp->message_body;
 
   int other_len = strlen(str);
-  int data_len = atoi(get_header_value_response(resp, "Content-Length"));
+  char *cont_len = get_header_value_response(resp, "Content-Length");
+  int data_len = 0;
+  if (cont_len != NULL) {
+    data_len = atoi();
+  }
 
   if (data != NULL) {
     str = append(str, data, other_len, data_len);
