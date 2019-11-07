@@ -141,31 +141,6 @@ void *thread_pool_loop(acceptor *acceptor) {
 }
 
 
-void maybe_run_thread_pool_server(acceptor *acceptor, int num_threads) {
-  // TODO: Add your code to accept and handle connections in threads from a
-  // thread pool
-
-  pthread_t *threads = (pthread_t *) malloc(num_threads * sizeof(pthread_t));
-  pthread_attr_t attributes = {0};
-  pthread_attr_init(&attributes);
-  pthread_attr_setdetachstate(&attributes, PTHREAD_CREATE_DETACHED);
-
-  int num_thrds_avail = num_threads;
-  int thrd_index = 0;
-
-  while (1) {
-    while (num_thrds_avail  > 0) {
-      pthread_create(&threads[thrd_index++], &attributes,
-          (void *(*)(void *)) thread_handle,
-          (void *) acceptor);
-      num_thrds_avail--;
-    }
-
-  }
-
-} /* run_thread_pool_server() */
-
-
 /*
  * Accept connections, drawing from a thread pool with num_threads to handle the
  * connections.
