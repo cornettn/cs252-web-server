@@ -36,5 +36,6 @@ char *get_header_value(http_request *request, char *key);
 char *get_header_value_response(http_response *resp, char *key);
 char *substring(char *buf, int start, int end);
 char *response_string(http_response *response);
+int get_response_length(http_response *resp);
 
 #endif // HTTP_MESSAGES_H

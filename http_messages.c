@@ -136,6 +136,21 @@ char *append_headers(char *str, http_response *resp) {
   return str;
 }
 
+int get_response_length(http_response *resp) {
+  int data_len = atoi(get_header_value_response(resp, "Content-Length"));
+
+  char *data = strdup(resp->message_body);
+  free(resp->message_body);
+  resp->message_body = NULL;
+
+  char *str = response_string(resp);
+
+  resp->message_body = strdup(data);
+  free(data);
+  data = NULL;
+
+  return data_len + strlen(str);
+}
 
 /*
  * Create the actual response string to be sent over the socket, based

@@ -502,12 +502,11 @@ void handle(socket_t *sock) {
 
   char *to_string = response_string(response);
 
-  printf("*******************************\n");
-  printf("{%s}\n****************************\n", to_string);
-
   mylog("string generated");
 
-  socket_write_string(sock, to_string);
+  int len = get_reponse_length(response);
+
+  socket_write(sock, to_string, len);
 
   mylog("Wrote string to socket");
 
