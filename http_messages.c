@@ -137,7 +137,11 @@ char *append_headers(char *str, http_response *resp) {
 }
 
 int get_response_length(http_response *resp) {
-  int data_len = atoi(get_header_value_response(resp, "Content-Length"));
+  char *cont_len = get_header_value_response(resp, "Content-Length");
+  int data_len = 0;
+  if (cont_len != NULL) {
+    data_len = atoi();
+  }
 
   char *data = strdup(resp->message_body);
   free(resp->message_body);
