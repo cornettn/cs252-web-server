@@ -118,7 +118,8 @@ char *get_header_value(const http_request *request, char *key) {
 
 char *append(char *str, char *appen, int len1, int len2) {
   str = realloc(str, len1 + len2);
-  strcat(str, appen);
+  str = (char *) memcpy(str + len1, appen, len2);
+  //strcat(str, appen);
   return str;
 } /* append() */
 
