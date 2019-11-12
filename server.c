@@ -62,7 +62,7 @@ char *return_user_pwd_string(void) {
 
   free(line);
   line = NULL;
-  fclose(fp);
+  //fclose(fp);
 
   mylog("Retrieved g_user_pass");
 
