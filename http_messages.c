@@ -156,6 +156,7 @@ int get_response_length(http_response *resp) {
 
   char *str = response_string(resp);
 
+  resp->message_body = (char *) malloc(data_len);
   if (data != NULL) {
     resp->message_body = memcpy(resp->message_body, data, data_len);
     free(data);
