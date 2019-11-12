@@ -148,14 +148,16 @@ int get_response_length(http_response *resp) {
 
   char *data = NULL;
   if (resp->message_body != NULL) {
-    data = strdup(resp->message_body);
+    data = memcpy(data, resp->message_body, data_len);
     resp->message_body = "\0";
   }
+
+  /* Generate the response string without the message nody in it */
 
   char *str = response_string(resp);
 
   if (data != NULL) {
-    resp->message_body = strdup(data);
+    resp->message_body = memcpy(resp->message_body, data, data_len);
     free(data);
     data = NULL;
   }
