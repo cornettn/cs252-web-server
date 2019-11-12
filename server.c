@@ -62,7 +62,7 @@ char *return_user_pwd_string(void) {
 
   free(line);
   line = NULL;
-  //fclose(fp);
+  fclose(fp);
 
   mylog("Retrieved g_user_pass");
 
@@ -504,10 +504,10 @@ void handle(socket_t *sock) {
 
   mylog("string generated");
 
-  int len = get_response_length(response);
+ // int len = get_response_length(response);
 
-//  socket_write_string(sock, to_string);
-  socket_write(sock, to_string, len);
+  socket_write_string(sock, to_string);
+//  socket_write(sock, to_string, len);
 
   mylog("Wrote string to socket");
 
