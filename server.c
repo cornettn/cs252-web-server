@@ -273,10 +273,6 @@ int parse_request(http_request *request, socket_t *sock) {
 
     fprintf(stderr, "error\n");
   }
-  else {
-    printf("Contents of Socket:\n----------------\n%s\n----------------\n", buf);
-  }
-
 
   /* Parse the method */
   /* Pointer to the first space in buffer */
@@ -444,25 +440,16 @@ int is_authorized(http_response *resp, http_request *req) {
  */
 
 void handle(socket_t *sock) {
-  mylog("handling sock");
-
   return_user_pwd_string();
-
-  mylog("Retrieved use pass from auth");
-
   http_request request = {0};
-
-  mylog("Try parsing the request");
 
   /* Parse the Request */
 
   int value = parse_request(&request, sock);
   if (value == PARSE_ERROR) {
-    mylog("Error parsing request");
     fprintf(stderr, "Error parsing the request\n");
   }
   print_request(&request);
-  mylog("Request parsed");
 
 
   /* Write the response */
@@ -472,49 +459,39 @@ void handle(socket_t *sock) {
   response->num_headers = 0;
   response->headers = NULL;
 
-  mylog("Starting Various Checks");
-
   if (value == PARSE_ERROR) {
-    mylog("Parse error");
     http_response resp = handle_request(&request, 400);
     response = &resp;
   }
   else if (!accepted_method(request.method)) {
-    mylog("not accepted method");
     http_response resp = handle_request(&request, 405);
     response = &resp;
   }
   else if (!accepted_http_version(request.http_version)) {
-    mylog("Not accepted http");
     http_response resp = handle_request(&request, 505);
     response = &resp;
   }
   else if(is_authorized(response, &request)) {
-    mylog("Authorized!");
     http_response resp = handle_htdocs(&request);
     response = &resp;
   }
 
-  mylog("Response has been generated");
   // PRIORITY 2
   // TODO: Add your code to create the correct HTTP response
 
 
-  char *to_string = response_string(response);
+  printf("Generating response\n");
 
-  mylog("string generated");
+  char *to_string = response_string(response);
 
  // int len = get_response_length(response);
 
   socket_write_string(sock, to_string);
 //  socket_write(sock, to_string, len);
 
-  mylog("Wrote string to socket");
-
   free(to_string);
   to_string = NULL;
 
-  mylog("Closing socket");
   close_socket(sock);
 } /* handle() */
 
