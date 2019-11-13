@@ -342,8 +342,12 @@ char *decode(char *str) {
   decoded = '\0';
 
   while(fgets(buf, sizeof(buf), fp) != NULL) {
-    printf("Buf: {%s}\n", buf);
-    decoded = strcat(decoded, buf);
+    if (decoded[0] != '\0') {
+      decoded = strcat(decoded, buf);
+    }
+    else {
+      decoded = strdup(buf);
+    }
   }
   free(buf);
   buf = NULL;
