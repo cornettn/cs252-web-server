@@ -117,6 +117,8 @@ void create_ssl_ctx(SSL_CTX *ctx) {
 tls_acceptor *create_tls_acceptor(int port) {
   tls_acceptor *acceptor = malloc(sizeof(tls_acceptor));
 
+  printf("alskjdhasldjkha\n");
+
   /* Set the IP address and port for this server */
 
   struct sockaddr_in addr = {0};
