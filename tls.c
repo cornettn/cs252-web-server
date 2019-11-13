@@ -135,7 +135,7 @@ tls_acceptor *create_tls_acceptor(int port) {
 
   /* Bind the socket to the IP address and port */
 
-  if (bind(sock, (struct sockadr *) &addr, sizeof(addr)) < 0) {
+  if (bind(sock, (struct sockaddr *) &addr, sizeof(addr)) < 0) {
     perror("Unable to listen to master socket");
     exit(EXIT_FAILURE);
   }
