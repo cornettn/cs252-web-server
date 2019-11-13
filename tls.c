@@ -20,8 +20,7 @@ int close_tls_socket(tls_socket *socket) {
   // TODO: Add your code to close the socket
   printf("Closing TLS socket fd %d\n", socket->socket_fd);
 
-
-
+  SSL_free(socket->ssl);
   int status = close(socket->socket_fd);
   free(socket);
   return status;
@@ -57,6 +56,11 @@ int tls_write(tls_socket *socket, char *buf, size_t buf_len) {
   }
 
   // TODO: Add your code to write to the socket
+
+
+  SSL_write(socket->ssl, buf, buf_len);
+
+  printf("Write to socket\n");
 
   return 0;
 } /* tls_write() */
@@ -107,6 +111,10 @@ SSL_CTX *create_ssl_ctx(SSL_CTX *ctx) {
   ctx = create_context();
   configure_context(ctx);
   return ctx;
+}
+
+void cleanup_ssl() {
+
 }
 
 /*
@@ -213,6 +221,9 @@ tls_socket *accept_tls_connection(tls_acceptor *acceptor) {
 int close_tls_acceptor(tls_acceptor *acceptor) {
   // TODO: Add your code to close the master socket
 
+  int status = close(acceptor->master_socket);
+  SSL_CTX_free(acceptor->ssl_ctx);
+  cleanup_ssl();
   free(acceptor);
-  return -1;
+  return status;
 } /* close_tls_acceptor() */
