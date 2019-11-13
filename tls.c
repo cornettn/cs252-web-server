@@ -77,7 +77,7 @@ SSL_CTX *create_context() {
   ctx = SSL_CTX_new(method);
   if (!ctx) {
     perror("Unable to create SSL context");
-    ERR_pront_errors_fp(stderr);
+    ERR_print_errors_fp(stderr);
     exit(EXIT_FAILURE);
   }
 
