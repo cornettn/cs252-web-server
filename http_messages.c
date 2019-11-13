@@ -120,7 +120,7 @@ char *append(char *str, char *appen, int len1, int len2) {
   char *new_str = (char *) malloc(len1 + len2);
   memcpy(new_str, str, len1);
   memcpy(new_str + len1, appen, len2);
-  //strcat(str, appen);
+  new_str[len1 + len2] = '\0';
   return new_str;
 } /* append() */
 
@@ -183,13 +183,6 @@ char *response_string(http_response *resp) {
   str = append(str, CRLF, strlen(str), strlen(CRLF));
 
   str = append_headers(str, resp);
-
-  /*
-  char *incorrect = "Connection: close\r\n"
-    "Content-Length: 12\r\n"
-    "\r\n"
-    "Hello CS252!\r\n";
-*/
 
   char *data = resp->message_body;
 
