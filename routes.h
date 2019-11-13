@@ -6,7 +6,6 @@
 http_response handle_cgi_bin(const http_request *request);
 http_response handle_htdocs(const http_request *request);
 http_response handle_default(const http_request *request);
-http_response handle_request(const http_request *request, int status_code);
 
 typedef http_response (*route_handle) (const http_request *);
 
@@ -16,10 +15,10 @@ typedef struct{
 }  routes;
 
 // A routes map, pairing string served and handle function
-/*routes route_map[] = {
+routes route_map[] = {
     {"/cgi-bin", &handle_cgi_bin},
     {"/", &handle_htdocs},
     {"", &handle_default}
 };
-*/
+
 #endif  // ROUTES_H
