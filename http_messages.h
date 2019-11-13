@@ -38,4 +38,6 @@ char *substring(char *buf, int start, int end);
 char *response_string(http_response *response);
 int get_response_length(http_response *resp);
 
+http_response handle_request(http_request *req, int status);
+
 #endif // HTTP_MESSAGES_H
