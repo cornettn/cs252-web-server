@@ -55,7 +55,7 @@ int readable(char *full_path) {
  * You should implement this function and use it in server.c
  */
 
-http_response handle_htdocs(const http_request *request) {
+http_response handle_htdocs(http_request *request) {
   printf("yoyo\n");
 
   http_response *resp = (http_response *) malloc(sizeof(http_response));
@@ -110,7 +110,7 @@ http_response handle_htdocs(const http_request *request) {
 
   if (!readable(absolute_path)) {
     mylog("Request is forbidden");
-    return handle_request((http_request) request, 403);
+    return handle_request(request, 403);
   }
 
   /* Not a directory and file exists */
