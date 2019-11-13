@@ -187,7 +187,7 @@ tls_socket *accept_tls_connection(tls_acceptor *acceptor) {
   }
   printf("ssl made\n");
 
-  SSL_set_fd(ssl, acceptor->master_socket);
+  SSL_set_fd(ssl, client);
 
   if (SSL_accept(ssl) <= 0) {
     ERR_print_errors_fp(stderr);
