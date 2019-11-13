@@ -181,6 +181,7 @@ tls_socket *accept_tls_connection(tls_acceptor *acceptor) {
 
   SSL *ssl = SSL_new(acceptor->ssl_ctx);
   if (ssl == NULL) {
+    printf("ssl is null\n");
     ERR_print_errors_fp(stderr);
     return NULL;
   }
