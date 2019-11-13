@@ -167,10 +167,13 @@ tls_acceptor *create_tls_acceptor(int port) {
 tls_socket *accept_tls_connection(tls_acceptor *acceptor) {
   // TODO: Add your code to create the new socket
 
+  printf("accept connection\n");
+
   struct sockaddr_in addr = {0};
   socklen_t len = sizeof(addr);
   int client = accept(acceptor->master_socket,
       (struct sockaddr *) &addr, &len);
+  printf("client made\n");
   if (client < 0) {
     perror("Unable to accept");
     return NULL;
@@ -188,6 +191,7 @@ tls_socket *accept_tls_connection(tls_acceptor *acceptor) {
     ERR_print_errors_fp(stderr);
     return NULL;
   }
+  printf("ssl accepted\n");
 
   tls_socket *sock = malloc(sizeof(tls_socket));
   sock->socket_fd = client;
