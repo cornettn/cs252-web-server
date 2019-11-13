@@ -110,7 +110,7 @@ http_response handle_htdocs(const http_request *request) {
 
   if (!readable(absolute_path)) {
     mylog("Request is forbidden");
-    return handle_request(request, 403);
+    return handle_request((http_request) request, 403);
   }
 
   /* Not a directory and file exists */
