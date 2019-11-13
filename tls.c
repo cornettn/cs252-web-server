@@ -175,7 +175,7 @@ tls_socket *accept_tls_connection(tls_acceptor *acceptor) {
   }
 
   SSL *ssl = SSL_new(acceptor->ssl_ctx);
-  SSL_set_fd(ssl, acceptor->socket_fd);
+  SSL_set_fd(ssl, acceptor->master_socket);
 
   if (SSL_accept(ssl) <= 0) {
     ERR_print_errors_fp(stderr);
