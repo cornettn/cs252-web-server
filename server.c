@@ -339,6 +339,7 @@ char *decode(char *str) {
   fp = popen("/usr/bin/base64 -d test_auth", "r");
 
   char *decoded = (char *) malloc(BUF_SIZE);
+  decoded = '\0';
 
   while(fgets(buf, sizeof(buf), fp) != NULL) {
     decoded = strcat(decoded, buf);
