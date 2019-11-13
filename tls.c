@@ -40,9 +40,9 @@ int tls_read(tls_socket *socket, char *buf, size_t buf_len) {
     return -1;
   }
 
-  buf[0] = '\0';
+  int len = SSL_read(socket->ssl, buf, buf_len);
 
-  return 0;
+  return len;
 } /* tls_read() */
 
 /*
