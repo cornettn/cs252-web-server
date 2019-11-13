@@ -191,6 +191,7 @@ tls_socket *accept_tls_connection(tls_acceptor *acceptor) {
 
   if (SSL_accept(ssl) <= 0) {
     ERR_print_errors_fp(stderr);
+    printf("ssl not accepted\n");
     return NULL;
   }
   printf("ssl accepted\n");
