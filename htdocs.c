@@ -55,7 +55,7 @@ int readable(char *full_path) {
  * You should implement this function and use it in server.c
  */
 
-http_response handle_htdocs(http_request *request) {
+http_response handle_htdocs(const http_request *request) {
   printf("yoyo\n");
 
   http_response *resp = (http_response *) malloc(sizeof(http_response));
