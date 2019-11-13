@@ -342,7 +342,7 @@ char *decode(char *str) {
   decoded = '\0';
 
   while(fgets(buf, sizeof(buf), fp) != NULL) {
-    if (decoded[0] != '\0') {
+    if (decoded != '\0') {
       decoded = strcat(decoded, buf);
     }
     else {
