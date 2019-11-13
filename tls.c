@@ -102,10 +102,11 @@ void configure_context(SSL_CTX *ctx) {
   }
 }
 
-void create_ssl_ctx(SSL_CTX *ctx) {
+SSL_CTX *create_ssl_ctx(SSL_CTX *ctx) {
   init_openssl();
   ctx = create_context();
   configure_context(ctx);
+  return ctx;
 }
 
 /*
@@ -152,7 +153,7 @@ tls_acceptor *create_tls_acceptor(int port) {
   acceptor->master_socket = sock;
   acceptor->addr = addr;
   SSL_CTX *ssl_ctx = NULL;
-  create_ssl_ctx(ssl_ctx);
+  ssl_ctx = create_ssl_ctx(ssl_ctx);
   acceptor->ssl_ctx = ssl_ctx;
 
   return acceptor;
@@ -181,7 +182,6 @@ tls_socket *accept_tls_connection(tls_acceptor *acceptor) {
 
   SSL *ssl = SSL_new(acceptor->ssl_ctx);
   if (ssl == NULL) {
-    printf("ssl is null\n");
     ERR_print_errors_fp(stderr);
     return NULL;
   }
