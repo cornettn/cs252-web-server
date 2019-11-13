@@ -339,10 +339,10 @@ char *decode(char *str) {
   fp = popen("/usr/bin/base64 -d test_auth", "r");
 
   char *decoded = (char *) malloc(BUF_SIZE);
-  decoded = '\0';
+  decoded[0] = '\0';
 
   while(fgets(buf, sizeof(buf), fp) != NULL) {
-    if (decoded != '\0') {
+    if (decoded[0] != '\0') {
       decoded = strcat(decoded, buf);
     }
     else {
