@@ -96,7 +96,7 @@ void configure_context(SSL_CTX *ctx) {
 
   /* Load the private key into context */
 
-  if ((SSL_CTX_use_PrivateKey_file(ctx, "key.pem" SSL_FILETYPE_PEM)) <= 0) {
+  if (SSL_CTX_use_PrivateKey_file(ctx, "key.pem", SSL_FILETYPE_PEM) <= 0) {
     ERR_print_errors_fp(stderr);
     exit(EXIT_FAILURE);
   }
