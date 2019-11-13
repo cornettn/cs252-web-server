@@ -173,17 +173,18 @@ tls_socket *accept_tls_connection(tls_acceptor *acceptor) {
   socklen_t len = sizeof(addr);
   int client = accept(acceptor->master_socket,
       (struct sockaddr *) &addr, &len);
-  printf("client made\n");
   if (client < 0) {
     perror("Unable to accept");
     return NULL;
   }
+  printf("client made\n");
 
   SSL *ssl = SSL_new(acceptor->ssl_ctx);
   if (ssl == NULL) {
     ERR_print_errors_fp(stderr);
     return NULL;
   }
+  printf("ssl made\n");
 
   SSL_set_fd(ssl, acceptor->master_socket);
 
