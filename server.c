@@ -484,6 +484,8 @@ void handle(socket_t *sock) {
 
   char *to_string = response_string(response);
 
+  printf("aha {%s}\n", to_string);
+
  // int len = get_response_length(response);
 
   socket_write_string(sock, to_string);
