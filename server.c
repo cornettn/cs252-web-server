@@ -196,6 +196,10 @@ header *parse_header(char *head) {
 } /* parse_header() */
 
 
+/*
+ * This function is used to parse all of the headers from the request.
+ */
+
 int parse_all_headers(http_request *request, socket_t *sock, char *buf) {
 
   /* This is the location of the next CRLF in the headers */
@@ -242,7 +246,7 @@ int parse_all_headers(http_request *request, socket_t *sock, char *buf) {
   }
 
   return SUCCESS;
-}
+} /* parse_all_header() */
 
 /*
  * This function is used to parse an incoming http request.
@@ -324,6 +328,9 @@ int parse_request(http_request *request, socket_t *sock) {
   return parse_all_headers(request, sock, buf);
 } /* parse_request() */
 
+/*
+ * This is used to decode base64 str.
+ */
 
 char *decode(char *str) {
 
@@ -354,8 +361,12 @@ char *decode(char *str) {
   fclose(fp);
   fp = NULL;
   return decoded;
-}
+} /* decode() &*/
 
+
+/*
+ * This is used to check the http version.
+ */
 
 int accepted_http_version(char *version) {
   mylog("Check to see if valid http version");
@@ -367,8 +378,12 @@ int accepted_http_version(char *version) {
   }
   mylog("Not valid http version");
   return 0;
-}
+} /* accepted_http_version() */
 
+
+/*
+ * This checks to see if the method is an accepted type.
+ */
 
 int accepted_method(char *method) {
   mylog("Check to see if accepted method");
@@ -380,7 +395,7 @@ int accepted_method(char *method) {
   }
   mylog("Not accepted method");
   return 0;
-}
+} /* accepted_method() */
 
 /*
  * This function is used to check if a request is authorized.
