@@ -120,6 +120,8 @@ char *append(char *str, char *appen, int len1, int len2) {
   char *new_str = (char *) malloc(len1 + len2);
   memcpy(new_str, str, len1);
   memcpy(new_str + len1, appen, len2);
+  free(str);
+  str = NULL;
   new_str[len1 + len2] = '\0';
   return new_str;
 } /* append() */
