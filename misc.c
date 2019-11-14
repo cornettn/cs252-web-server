@@ -7,24 +7,32 @@
 #include <ctype.h>
 #include <string.h>
 
+#define BUF_SIZE (1024)
+
+char *text_types[] = {"html", "csv", "css"}
+// char *image_types[] = {"
 
 char *my_get_content_type(char *filename) {
-  char *type = strrchr(filename, '.');
-  if (type == NULL) {
-    return ":text/plain";
-  }
+  char *command = (char *) malloc(BUF_SIZE);
 
-  /* Iterate past the '.' */
+  sprintf(command, "file -biE %s > temp_file_cont_type", filename);
+  system(command);
+  command[0] = '\0';
 
-  type++;
+  FILE *fp = fopen("temp_file_cont_type", "r");
+  fseek(fp, 0, SEEK_END);
+  int len = ftell(fp);
+  fseek(fp, 0, SEEK_SET);
 
-  char *str = malloc(strlen(type) + 2);
-  sprintf(str, ":%s", type);
-  str[strlen(type) + 2] = '\0';
+  char *type = (char *) malloc(BUF_SIZE);
+  fread(type, sizeof(char), len, fp);
 
-  printf("wtf: {%s}\n", str);
+  printf("aaaaaaaaaa: %s\n", type);
 
-  return str;
+  sprintf(command, "rm -rf temp_file_cont_type");
+  system(command);
+
+  return type;
 }
 
 /*
@@ -56,7 +64,7 @@ char *get_content_type(char *filename) {
     dup2(pipe_fd[1], STDOUT_FILENO);
     close(pipe_fd[1]);
 
-    execl("/usr/bin/file", "file", "-biE", filename, NULL);
+    execl("/usr/bin/file", "file", "-b", filename, NULL);
     perror("get_content_type execl error");
     exit(-1);
   }
