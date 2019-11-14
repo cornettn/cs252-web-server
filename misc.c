@@ -9,8 +9,9 @@
 
 #define BUF_SIZE (1024)
 
-char *text_types[] = {"html", "csv", "css"};
-// char *image_types[] = {"
+/*
+ * This is used to get the content type.
+ */
 
 char *my_get_content_type(char *filename) {
   char *command = (char *) malloc(BUF_SIZE);
@@ -27,13 +28,11 @@ char *my_get_content_type(char *filename) {
   char *type = (char *) malloc(BUF_SIZE);
   fread(type, sizeof(char), len, fp);
 
-  printf("aaaaaaaaaa: %s\n", type);
-
   sprintf(command, "rm -rf temp_file_cont_type");
   system(command);
 
   return type;
-}
+} /* my_get_content_type() */
 
 /*
  * Returns the Content-Type value that should be used for a given filename. The
