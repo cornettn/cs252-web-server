@@ -45,13 +45,11 @@ char *return_user_pwd_string(void) {
   fp = fopen("./auth.txt", "r");
 
   if (fp == NULL) {
-    mylog("fp is NULL --- couldn't read auth.txt");
     perror("couldn't read auth.txt");
     exit(-1);
   }
 
   if (getline(&line, &len, fp) == -1) {
-    mylog("getline error");
     perror("couldn't read auth.txt");
     free(line);
     line = NULL;
@@ -64,8 +62,6 @@ char *return_user_pwd_string(void) {
   line = NULL;
   fclose(fp);
 
-  mylog("Retrieved g_user_pass");
-
   return g_user_pass;
 } /* return_user_pwd_string() */
 
@@ -74,6 +70,7 @@ char *return_user_pwd_string(void) {
  */
 
 void run_linear_server(acceptor *acceptor) {
+  return_user_pwd_string();
   while (1) {
     socket_t *sock = accept_connection(acceptor);
 
@@ -89,6 +86,7 @@ void run_linear_server(acceptor *acceptor) {
 
 void run_forking_server(acceptor *acceptor) {
   // TODO: Add your code to accept and handle connections in child processes
+  return_user_pwd_string();
   while (1) {
     socket_t *sock = accept_connection(acceptor);
     //mylog("Connection accepted");
@@ -122,6 +120,7 @@ void run_forking_server(acceptor *acceptor) {
 
 void run_threaded_server(acceptor *acceptor) {
   // TODO: Add your code to accept and handle connections in new threads
+  return_user_pwd_string();
   while(1) {
     socket_t *sock = accept_connection(acceptor);
     pthread_t thrd = {0};
@@ -151,6 +150,7 @@ void *thread_pool_loop(acceptor *acceptor) {
 void run_thread_pool_server(acceptor *acceptor, int num_threads) {
   // TODO: Add your code to accept and handle connections in threads from a
   // thread pool
+  return_user_pwd_string();
 
   pthread_t *threads = (pthread_t *) malloc(num_threads * sizeof(pthread_t));
   pthread_attr_t attributes = {0};
@@ -442,7 +442,7 @@ int is_authorized(http_response *resp, http_request *req) {
  */
 
 void handle(socket_t *sock) {
-  return_user_pwd_string();
+  //return_user_pwd_string();
   http_request request = {0};
 
   /* Parse the Request */
