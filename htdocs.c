@@ -117,7 +117,7 @@ http_response handle_htdocs(const http_request *request) {
 
   mylog("Valid Request");
 
-  char *content_type = get_content_type(absolute_path);
+  char *content_type = my_get_content_type(absolute_path);
 
   char *semi_colon = strchr(content_type, ';');
   char *type = substring(content_type, 0, semi_colon - content_type);

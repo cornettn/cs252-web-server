@@ -7,6 +7,22 @@
 #include <ctype.h>
 #include <string.h>
 
+
+char *my_get_content_type(char *filename) {
+  char *type = strrhr(filename, '.');
+  if (type == NULL) {
+    return ":text/plain";
+  }
+
+  char *str = malloc(strlen(type) + 2);
+  sprintf(str, ":%s", type);
+  str[strlen(type) + 2] = '\0';
+
+  printf("wtf: {%s}\n", str);
+
+  return str;
+}
+
 /*
  * Returns the Content-Type value that should be used for a given filename. The
  * returned string must be free()'d by the caller.
@@ -34,7 +50,7 @@ char *get_content_type(char *filename) {
     close(pipe_fd[0]);
     dup2(pipe_fd[1], STDOUT_FILENO);
     dup2(pipe_fd[1], STDOUT_FILENO);
-//    close(pipe_fd[1]);
+    close(pipe_fd[1]);
 
     execl("/usr/bin/file", "file", "-biE", filename, NULL);
     perror("get_content_type execl error");

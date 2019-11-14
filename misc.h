@@ -1,7 +1,7 @@
 #ifndef MISC_H
 #define MISC_H
 
-char *get_content_type(char *filename);
+char *my_get_content_type(char *filename);
 
 typedef struct {
   char *display_name;
