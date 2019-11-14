@@ -382,7 +382,6 @@ int accepted_method(char *method) {
   return 0;
 }
 
-
 /*
  * This function is used to check if a request is authorized.
  */
@@ -406,7 +405,7 @@ int is_authorized(http_response *resp, http_request *req) {
     free(command);
     command = NULL;
 
-    //decoded = strcat(decoded, "\n");
+    decoded = strcat(decoded, "\n");
 
     /* Ensure that the username and password are correct */
 
