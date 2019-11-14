@@ -9,7 +9,7 @@
 
 #define BUF_SIZE (1024)
 
-char *text_types[] = {"html", "csv", "css"}
+char *text_types[] = {"html", "csv", "css"};
 // char *image_types[] = {"
 
 char *my_get_content_type(char *filename) {
