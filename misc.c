@@ -9,7 +9,7 @@
 
 
 char *my_get_content_type(char *filename) {
-  char *type = strrhr(filename, '.');
+  char *type = strrchr(filename, '.');
   if (type == NULL) {
     return ":text/plain";
   }
