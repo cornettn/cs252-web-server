@@ -27,17 +27,25 @@ void print_usage(char *name) {
     printf("USAGE: %s [-f|-t|-pNUM_THREADS] [-h] PORT_NO\n", name);
 } /* print_usage() */
 
+/*
+ * Used for debugging.
+ */
+
 void mylog(char *msg) {
   return;
   // dprintf(g_debug, "%s\n", msg);
-}
+} /* mylog() */
+
+/*
+ * Used to handle SIGCHLD.
+ */
 
 void sig_child_handler(int sig, siginfo_t *info, void *context) {
   UNUSED(sig);
   UNUSED(context);
 
   waitpid(info->si_pid, 0, WNOHANG);
-}
+} /* sig_child_handler() */
 
 
 /*
