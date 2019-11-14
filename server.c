@@ -406,7 +406,7 @@ int is_authorized(http_response *resp, http_request *req) {
     free(command);
     command = NULL;
 
-    decoded = strcat(decoded, "\n");
+    //decoded = strcat(decoded, "\n");
 
     /* Ensure that the username and password are correct */
 
