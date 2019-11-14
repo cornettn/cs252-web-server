@@ -1,5 +1,3 @@
-#include "http_messages.h"
-
 #include <stdio.h>
 #include <malloc.h>
 #include <limits.h>
@@ -10,12 +8,12 @@
 #include <sys/stat.h>
 #include <errno.h>
 
+#include "http_messages.h"
 #include "misc.h"
 #include "main.h"
 #include "routes.h"
 
-#define FRONTSLASH ('/')
-#define INDEX ("index.html")
+#define INDEX "index.html"
 
 
 /*
@@ -89,14 +87,14 @@ http_response handle_htdocs(const http_request *request) {
   char *absolute_path = get_realpath(full_url);
 
   if (is_directory(absolute_path)) {
-    if (absolute_path[strlen(absolute_path) - 1] != FRONTSLASH) {
+    if (absolute_path[strlen(absolute_path) - 1] != '/') {
 
       /* Request will server the directory/index.html */
 
       absolute_path = (char *) realloc(absolute_path, strlen(absolute_path) +
                                             1 +
                                             strlen(INDEX));
-      sprintf(absolute_path, "%s%c%s", absolute_path, FRONTSLASH, INDEX);
+      sprintf(absolute_path, "%s%c%s", absolute_path, '/', INDEX);
       if (!exists(absolute_path)) {
 
         /* Send a 404 Response */
