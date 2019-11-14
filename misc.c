@@ -14,6 +14,10 @@ char *my_get_content_type(char *filename) {
     return ":text/plain";
   }
 
+  /* Iterate past the '.' */
+
+  type++;
+
   char *str = malloc(strlen(type) + 2);
   sprintf(str, ":%s", type);
   str[strlen(type) + 2] = '\0';
