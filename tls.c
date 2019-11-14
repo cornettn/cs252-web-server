@@ -17,7 +17,6 @@
  */
 
 int close_tls_socket(tls_socket *socket) {
-  // TODO: Add your code to close the socket
   printf("Closing TLS socket fd %d\n", socket->socket_fd);
 
   //SSL_free(socket->ssl);
@@ -34,7 +33,6 @@ int close_tls_socket(tls_socket *socket) {
  */
 
 int tls_read(tls_socket *socket, char *buf, size_t buf_len) {
-  // TODO: Add your code to read from the socket
   if (buf == NULL){
     return -1;
   }
@@ -55,9 +53,6 @@ int tls_write(tls_socket *socket, char *buf, size_t buf_len) {
     return -1;
   }
 
-  // TODO: Add your code to write to the socket
-
-
   SSL_write(socket->ssl, buf, buf_len);
 
   printf("Write to socket\n");
@@ -65,11 +60,18 @@ int tls_write(tls_socket *socket, char *buf, size_t buf_len) {
   return 0;
 } /* tls_write() */
 
+/*
+ * Perform initialization of SSL.
+ */
 
 void init_openssl() {
   SSL_load_error_strings();
   OpenSSL_add_ssl_algorithms();
-}
+} /* init_openssl() */
+
+/*
+ * This is used to created a SSL context.
+ */
 
 SSL_CTX *create_context() {
   const SSL_METHOD *method = NULL;
@@ -86,7 +88,11 @@ SSL_CTX *create_context() {
   }
 
   return ctx;
-}
+} /* create_context() */
+
+/*
+ * This is used to configure a SSL context.
+ */
 
 void configure_context(SSL_CTX *ctx) {
   SSL_CTX_set_ecdh_auto(ctx, 1);
@@ -104,18 +110,19 @@ void configure_context(SSL_CTX *ctx) {
     ERR_print_errors_fp(stderr);
     exit(EXIT_FAILURE);
   }
-}
+} /* configure_context() */
+
+
+/*
+ * This is used to initialize SSL and create correct context.
+ */
 
 SSL_CTX *create_ssl_ctx(SSL_CTX *ctx) {
   init_openssl();
   ctx = create_context();
   configure_context(ctx);
   return ctx;
-}
-
-void cleanup_ssl() {
-
-}
+} /* create_ssl_ctx() */
 
 /*
  * Create a new TLS socket acceptor, listening on the given port. Return NULL on
@@ -174,10 +181,6 @@ tls_acceptor *create_tls_acceptor(int port) {
  */
 
 tls_socket *accept_tls_connection(tls_acceptor *acceptor) {
-  // TODO: Add your code to create the new socket
-
-  printf("accept connection\n");
-
   struct sockaddr_in addr = {0};
   socklen_t len = sizeof(addr);
   int client = accept(acceptor->master_socket,
@@ -186,14 +189,12 @@ tls_socket *accept_tls_connection(tls_acceptor *acceptor) {
     perror("Unable to accept");
     return NULL;
   }
-  printf("client made\n");
 
   SSL *ssl = SSL_new(acceptor->ssl_ctx);
   if (ssl == NULL) {
     ERR_print_errors_fp(stderr);
     return NULL;
   }
-  printf("ssl made\n");
 
   SSL_set_fd(ssl, client);
 
@@ -202,7 +203,6 @@ tls_socket *accept_tls_connection(tls_acceptor *acceptor) {
     printf("ssl not accepted\n");
     return NULL;
   }
-  printf("ssl accepted\n");
 
   tls_socket *sock = malloc(sizeof(tls_socket));
   sock->socket_fd = client;
@@ -223,7 +223,6 @@ int close_tls_acceptor(tls_acceptor *acceptor) {
 
   int status = close(acceptor->master_socket);
   SSL_CTX_free(acceptor->ssl_ctx);
-  cleanup_ssl();
   free(acceptor);
   return status;
 } /* close_tls_acceptor() */

@@ -18,19 +18,30 @@
 #define INDEX ("index.html")
 
 
+/*
+ * This function is used to get to the total size of the file.
+ */
+
 int get_file_size(char *path) {
   struct stat buf = {0};
   stat(path, &buf);
   return (int) buf.st_size;
-}
+} /* get_file_size() */
+
+/*
+ * This function is used to get the absolute path of the request.
+ */
 
 char *get_realpath(char *relative) {
   char *full_path = (char *) malloc(PATH_MAX);
   full_path = realpath(relative, full_path);
   printf("rel:  %s\nfull: %s\n", relative, full_path);
   return full_path;
-}
+} /* get_realpath() */
 
+/*
+ * This function is used to test to see if the file is a directory.
+ */
 
 int is_directory(char *full_path) {
   struct stat buf = {0};
@@ -41,32 +52,33 @@ int is_directory(char *full_path) {
     return 0;
   }
   return S_ISDIR(buf.st_mode);
-}
+} /* is_directory() */
+
+/*
+ * This function is used to check the existence of the filepath.
+ */
 
 int exists(char *full_path) {
   return (access(full_path, F_OK) == 0);
-}
+} /* exists() */
+
+/*
+ * This function is used to check the read permissions of a file.
+ */
 
 int readable(char *full_path) {
   return (access(full_path, R_OK) == 0);
-}
+} /* readable() */
 
 /*
  * You should implement this function and use it in server.c
  */
 
 http_response handle_htdocs(const http_request *request) {
-  printf("yoyo\n");
-
   http_response *resp = (http_response *) malloc(sizeof(http_response));
   resp->http_version = request->http_version;
   resp->num_headers = 0;
   resp->headers = NULL;
-
-    // char *referer = get_header_value(request, REFERER);
-    // printf("%s\n", referer);
-
-  // TODO: Get the request URL, verify the file exists, and serve it
 
   /* Get the requested URL */
 
@@ -77,7 +89,6 @@ http_response handle_htdocs(const http_request *request) {
   char *absolute_path = get_realpath(full_url);
 
   if (is_directory(absolute_path)) {
-    mylog("Request is directory");
     if (absolute_path[strlen(absolute_path) - 1] != FRONTSLASH) {
 
       /* Request will server the directory/index.html */
@@ -94,7 +105,6 @@ http_response handle_htdocs(const http_request *request) {
       }
     }
     else {
-      /* Browsable directories */
       printf("Browsable\n");
     }
   }
@@ -102,27 +112,22 @@ http_response handle_htdocs(const http_request *request) {
   if (!exists(absolute_path)) {
 
     /* Return a 404 response */
-    mylog("Request does not exist");
+
     return handle_default(request);
   }
 
   /* File exists */
 
   if (!readable(absolute_path)) {
-    mylog("Request is forbidden");
     return handle_request(request, 403);
   }
 
   /* Not a directory and file exists */
 
-  mylog("Valid Request");
-
   char *content_type = my_get_content_type(absolute_path);
 
   char *semi_colon = strchr(content_type, ';');
   char *type = substring(content_type, 0, semi_colon - content_type);
-
-  printf("Type: %s\n", type);
 
   header *type_head = (header *) malloc(sizeof(header));
   type_head->key = "Content-Type";
@@ -160,8 +165,6 @@ http_response handle_htdocs(const http_request *request) {
   free(data);
   data = NULL;
 
-  mylog("Response generated");
-
   return *resp;
-}
+} /* handle_htdocs() */
 
