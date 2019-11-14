@@ -34,7 +34,7 @@ char *get_content_type(char *filename) {
     close(pipe_fd[0]);
     dup2(pipe_fd[1], STDOUT_FILENO);
     dup2(pipe_fd[1], STDOUT_FILENO);
-    close(pipe_fd[1]);
+//    close(pipe_fd[1]);
 
     execl("/usr/bin/file", "file", "-biE", filename, NULL);
     perror("get_content_type execl error");
