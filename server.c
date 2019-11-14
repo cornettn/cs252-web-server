@@ -10,6 +10,7 @@
 #include "http_messages.h"
 #include "routes.h"
 #include "main.h"
+#include "cgi_bin.h"
 
 #define BUF_SIZE (1024)
 #define TRUE (1)
