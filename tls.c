@@ -20,7 +20,7 @@ int close_tls_socket(tls_socket *socket) {
   // TODO: Add your code to close the socket
   printf("Closing TLS socket fd %d\n", socket->socket_fd);
 
-  SSL_free(socket->ssl);
+  //SSL_free(socket->ssl);
   int status = close(socket->socket_fd);
   free(socket);
   return status;
