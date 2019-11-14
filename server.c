@@ -488,10 +488,10 @@ void handle(socket_t *sock) {
 
   printf("aha {%s}\n", to_string);
 
- // int len = get_response_length(response);
+  int len = get_response_length(response);
 
-  socket_write_string(sock, to_string);
-//  socket_write(sock, to_string, len);
+ // socket_write_string(sock, to_string);
+  socket_write(sock, to_string, len);
 
   free(to_string);
   to_string = NULL;
